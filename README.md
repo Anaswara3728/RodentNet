@@ -78,17 +78,24 @@ Use the returned key shares with `/api/handshake/challenge`, `/api/dev/sign`, an
 
 ## Simulation
 
-The simulation endpoint starts a Flower simulation in the background. Use `fake_data=true`
-for fast local smoke tests without downloading CIFAR10.
+The simulation endpoint starts a Flower simulation in the background. RodentNet supports two tasks: `cifar` (default 2D CNN demo) and `epitope` (TCR-Epitope binding with SiameseEpitopeKANNet).
+
+Use `fake_data=true` for fast local smoke tests without downloading data.
 
 ```bash
+# Run the CIFAR-10 classification demo
 curl -s -X POST http://localhost:8000/api/simulation/start \
   -H 'content-type: application/json' \
-  -d '{"rounds":1,"clients":3,"fake_data":true}'
+  -d '{"rounds":1,"clients":3,"fake_data":true,"task":"cifar"}'
+
+# Run the TCR-Epitope Binding research model
+curl -s -X POST http://localhost:8000/api/simulation/start \
+  -H 'content-type: application/json' \
+  -d '{"rounds":1,"clients":3,"fake_data":true,"task":"epitope"}'
 ```
 
-For real CIFAR10, set `fake_data=false`; torchvision will download the dataset under
-`backend/data/cifar10`.
+For real CIFAR10, set `fake_data=false` and `task=cifar`.
+For real VDJdb TCR data, set `fake_data=false` and `task=epitope`. Ensure you provide the path to your VDJdb dataset.
 
 ## Key Files
 
