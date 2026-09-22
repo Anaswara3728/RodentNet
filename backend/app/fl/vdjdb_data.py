@@ -45,6 +45,12 @@ class VDJdbDataset(Dataset):
         if 'Species' in df.columns:
             df = df[df['Species'] == 'HomoSapiens'].copy()
             
+        # Confidence filtering
+        if 'vdjdb.score' in df.columns:
+            df = df[df['vdjdb.score'] >= 1].copy()
+        elif 'Score' in df.columns:
+            df = df[df['Score'] >= 1].copy()
+            
         df = df.dropna(subset=['CDR3', 'Epitope'])
         self.data = df.reset_index(drop=True)
         
@@ -87,6 +93,41 @@ class VDJdbDataset(Dataset):
         
         return tcr_tensor, epi_tensor, epi_id
 
+class EpisodicBatchSampler(torch.utils.data.Sampler):
+    """Samples n_ways epitopes and k_shots TCRs per epitope to ensure rare epitopes are seen."""
+    def __init__(self, dataset_subset, n_ways=4, k_shots=8):
+        self.dataset_subset = dataset_subset
+        self.n_ways = n_ways
+        self.k_shots = k_shots
+        
+        self.epi_to_indices = {}
+        for idx in range(len(dataset_subset)):
+            orig_idx = dataset_subset.indices[idx]
+            epi = dataset_subset.dataset.data.iloc[orig_idx]['Epitope']
+            if epi not in self.epi_to_indices:
+                self.epi_to_indices[epi] = []
+            self.epi_to_indices[epi].append(idx)
+            
+        self.unique_epis = list(self.epi_to_indices.keys())
+        self.num_batches = max(1, len(dataset_subset) // (n_ways * k_shots))
+            
+    def __iter__(self):
+        for _ in range(self.num_batches):
+            batch = []
+            # Sample n_ways epitopes (with replacement if we have fewer epitopes than n_ways)
+            replace_epis = len(self.unique_epis) < self.n_ways
+            epis = np.random.choice(self.unique_epis, size=self.n_ways, replace=replace_epis)
+            
+            for epi in epis:
+                indices = self.epi_to_indices[epi]
+                replace_shots = len(indices) < self.k_shots
+                sampled = np.random.choice(indices, size=self.k_shots, replace=replace_shots)
+                batch.extend(sampled)
+            yield batch
+            
+    def __len__(self):
+        return self.num_batches
+
 def load_vdjdb_partition(num_clients: int, client_id: int, tsv_path: str = None, synthetic: bool = False):
     """
     Returns non-IID partitioned train/eval DataLoaders.
@@ -123,8 +164,14 @@ def load_vdjdb_partition(num_clients: int, client_id: int, tsv_path: str = None,
     train_idx = client_indices[:split_idx]
     test_idx = client_indices[split_idx:]
     
-    train_loader = DataLoader(Subset(dataset, train_idx), batch_size=32, shuffle=True)
-    test_loader = DataLoader(Subset(dataset, test_idx), batch_size=32, shuffle=False)
+    train_subset = Subset(dataset, train_idx)
+    test_subset = Subset(dataset, test_idx)
+    
+    # Use Episodic sampling for training to handle class imbalance
+    # 4 ways * 8 shots = 32 batch size
+    train_sampler = EpisodicBatchSampler(train_subset, n_ways=4, k_shots=8)
+    train_loader = DataLoader(train_subset, batch_sampler=train_sampler)
+    test_loader = DataLoader(test_subset, batch_size=32, shuffle=False)
     
     # We also return the catalogue of all unique epitope tokens (needed for evaluation against unseen/all epitopes)
     all_epi_tokens = torch.stack([dataset.epi_tokenizer.encode(epi) for epi in dataset.unique_epitopes])

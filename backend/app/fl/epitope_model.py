@@ -188,12 +188,16 @@ def train_one_epoch(model, loader, device, lr=1e-3):
     return total_loss / max(len(loader), 1)
 
 def evaluate_model(model, loader, catalogue_tokens, device):
-    """Evaluates nearest-epitope top-1 accuracy against a catalogue of known epitopes."""
+    """Evaluates nearest-epitope top-1 accuracy, AUROC, and MRR against a catalogue of known epitopes."""
     model.eval()
     catalogue_tokens = catalogue_tokens.to(device)
     
     correct = 0
     total = 0
+    mrr_sum = 0.0
+    
+    all_labels = []
+    all_scores = []
     
     with torch.no_grad():
         cat_emb = model.encode_epitope(catalogue_tokens)
@@ -203,12 +207,39 @@ def evaluate_model(model, loader, catalogue_tokens, device):
             epi_ids = epi_ids.to(device)
             
             tcr_emb = model.encode_tcr(tcr_batch)
-            
             logits = model.pairwise_logits(tcr_emb, cat_emb)
-            preds = logits.argmax(dim=1)
             
+            preds = logits.argmax(dim=1)
             correct += (preds == epi_ids).sum().item()
             total += tcr_batch.size(0)
             
+            # MRR computation
+            sorted_indices = torch.argsort(logits, dim=1, descending=True)
+            for i in range(tcr_batch.size(0)):
+                rank = (sorted_indices[i] == epi_ids[i]).nonzero(as_tuple=True)[0].item() + 1
+                mrr_sum += 1.0 / rank
+                
+            # For AUROC, we need binary labels vs scores for the correct class
+            # A simplified macro-AUROC approximation per batch:
+            # Flatten logits and create one-hot targets
+            one_hot = F.one_hot(epi_ids, num_classes=logits.size(1))
+            all_labels.append(one_hot.cpu().view(-1))
+            all_scores.append(logits.cpu().view(-1))
+            
     accuracy = correct / max(total, 1)
-    return 0.0, accuracy
+    mrr = mrr_sum / max(total, 1)
+    
+    # Compute approximate global AUROC
+    try:
+        from sklearn.metrics import roc_auc_score
+        y_true = torch.cat(all_labels).numpy()
+        y_score = torch.cat(all_scores).numpy()
+        # Only compute if we have both classes
+        if len(np.unique(y_true)) == 2:
+            auroc = float(roc_auc_score(y_true, y_score))
+        else:
+            auroc = 0.5
+    except ImportError:
+        auroc = 0.0 # scikit-learn not installed
+        
+    return 0.0, {"accuracy": float(accuracy), "mrr": float(mrr), "auroc": float(auroc)}

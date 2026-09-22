@@ -167,17 +167,20 @@ class RodentNetClient(BaseNumPyClient):
         if self.task == "epitope":
             if self.catalogue_tokens is None:
                 return 0.0, 0, {"error": "catalogue_tokens not loaded", "client_id": self.client_id}
-            loss, accuracy = epitope_evaluate_model(
+            loss, metrics = epitope_evaluate_model(
                 self.model,
                 self.test_loader,
                 catalogue_tokens=self.catalogue_tokens,
                 device=self.device,
             )
+            metrics["task"] = self.task
+            metrics["client_id"] = self.client_id
+            examples = len(self.test_loader.dataset)  # type: ignore[arg-type]
+            return loss, examples, metrics
         else:
             loss, accuracy = evaluate_model(self.model, self.test_loader, device=self.device)
-
-        examples = len(self.test_loader.dataset)  # type: ignore[arg-type]
-        return loss, examples, {"accuracy": accuracy, "task": self.task, "client_id": self.client_id}
+            examples = len(self.test_loader.dataset)  # type: ignore[arg-type]
+            return loss, examples, {"accuracy": accuracy, "task": self.task, "client_id": self.client_id}
 
 
 def make_flower_client(**kwargs: object):
