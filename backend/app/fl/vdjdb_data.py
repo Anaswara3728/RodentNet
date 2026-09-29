@@ -42,6 +42,20 @@ class VDJdbDataset(Dataset):
             raise FileNotFoundError(f"VDjDB TSV not found at {tsv_path}")
             
         df = pd.read_csv(tsv_path, sep='\t', low_memory=False)
+        
+        # Normalize column names: the official VDJdb release uses lowercase
+        # and dot-separated names (e.g. 'cdr3', 'species', 'antigen.epitope')
+        # while our pipeline expects 'CDR3', 'Species', 'Epitope'.
+        col_renames = {}
+        if 'cdr3' in df.columns and 'CDR3' not in df.columns:
+            col_renames['cdr3'] = 'CDR3'
+        if 'species' in df.columns and 'Species' not in df.columns:
+            col_renames['species'] = 'Species'
+        if 'antigen.epitope' in df.columns and 'Epitope' not in df.columns:
+            col_renames['antigen.epitope'] = 'Epitope'
+        if col_renames:
+            df = df.rename(columns=col_renames)
+        
         if 'Species' in df.columns:
             df = df[df['Species'] == 'HomoSapiens'].copy()
             

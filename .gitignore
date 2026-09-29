@@ -228,3 +228,6 @@ frontend/dist/
 *.onnx
 *.npz
 *.npy
+
+# Raw Datasets
+data/
