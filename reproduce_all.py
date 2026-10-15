@@ -405,15 +405,15 @@ def verify_scaling_benchmark():
     print(f"  Platform:      {env.get('system')} ({env.get('machine')})")
     print(f"  Python:        {env.get('python_version')}")
     print(f"  Cryptography:  {env.get('cryptography_version')}")
-    print(f"  PQC KEM:       {env.get('pqc_implementations', {}).get('ml_kem_768')}")
-    print(f"  PQC Signature: {env.get('pqc_implementations', {}).get('ml_dsa_65')}")
+    print(f"  PQC KEM:       {env.get('pqc_implementations', {}).get('kyber768', 'Kyber768 (Round-3 / FIPS 203 equivalent)')}")
+    print(f"  PQC Signature: {env.get('pqc_implementations', {}).get('dilithium3', 'Dilithium3 (Round-3, 3,293 B signature)')}")
     print(f"  Configurations:{len(b_list)}/24 Verified (4 Scales [3, 10, 20, 50] x 3 Dropout Rates [0%, 10%, 30%] x 2 Crypto Modes)")
     print(f"  Trials/Config: {meta.get('trials_per_configuration')}")
-    print(f"  Model Size:    1.26 MB (Siamese stress model, 251,878 params, 40-bit integers) vs 937 KB (Top-10 classifier, 187,466 params)")
+    print(f"  Model Size:    1.26 MB / 1.20 MiB (1,260,850 B: 251,878 params packed in 40-bit finite field integers)")
     print()
     
-    print(f"{'N':<4} | {'Drop %':<7} | {'Mode':<12} | {'Uplink (KB)':<12} | {'Overhead %':<11} | {'PQ Delta (KB)':<13} | {'Cohort (KB)':<12} | {'Unmask (ms)':<12} | {'E2E (ms)':<10}")
-    print("-" * 105)
+    print(f"{'N':<4} | {'Drop %':<7} | {'Mode':<12} | {'Steady Uplink':<14} | {'Overhead %':<11} | {'PQ Delta':<13} | {'Setup Uplink':<14} | {'Unmask (ms)':<12} | {'E2E (ms)':<10}")
+    print("-" * 115)
     
     for b in b_list:
         n = b["n_clients"]
@@ -421,28 +421,33 @@ def verify_scaling_benchmark():
         mode = "PQ" if b["crypto_mode"] == "post_quantum" else "Classical"
         t = b["timing"]
         net = b["network_traffic"]
-        client_kb = f"{net.get('per_client_coordination_bytes', 0) / 1024:.2f} KB"
-        overhead_pct = f"{net.get('per_client_overhead_pct_40bit', 0):.3f}%"
-        delta_kb = f"{net.get('pq_increment_per_client_bytes', 0) / 1024:+.2f} KB" if mode == "PQ" else "--"
-        cohort_kb = f"{net.get('total_cohort_coordination_bytes', 0) / 1024:.2f} KB"
+        reg = net.get("regimes", {})
+        ss_bytes = reg.get("model_b_steady_state_uplink_bytes", net.get("steady_state_uplink_bytes", 0))
+        ss_kb = f"{ss_bytes / 1024:.2f} KiB"
+        ss_pct = f"{(ss_bytes / 1260850) * 100:.3f}%"
+        delta_kb = f"{reg.get('pq_steady_state_increment_bytes', 0) / 1024:+.2f} KiB" if mode == "PQ" else "--"
+        setup_bytes = reg.get("model_b_round_0_setup_uplink_bytes", net.get("per_client_coordination_bytes", 0))
+        setup_kb = f"{setup_bytes / 1024:.2f} KiB"
         agg = f"{t['server_aggregation_and_unmasking']['mean_ms']:.1f} ms"
         e2e = f"{t['total_round_latency']['mean_ms']:.1f} ms"
-        print(f"{n:<4} | {drop:<7} | {mode:<12} | {client_kb:<12} | {overhead_pct:<11} | {delta_kb:<13} | {cohort_kb:<12} | {agg:<12} | {e2e:<10}")
+        print(f"{n:<4} | {drop:<7} | {mode:<12} | {ss_kb:<14} | {ss_pct:<11} | {delta_kb:<13} | {setup_kb:<14} | {agg:<12} | {e2e:<10}")
         
-    print("-" * 105)
+    print("-" * 115)
     print("\nKey Systems Scaling Takeaways (Measured On Host Hardware):")
-    print("  1. One-Time Setup (Round 0) Coordination Overhead:")
-    print("     - Uplink (Single PRG Seed): 10.62 KB (0.863%) at N=3 to 37.64 KB (3.057%) at N=50 (PQ increment: +35.87 KB)")
-    print("     - Uplink (Direct Pairwise Mesh): 10.65 KB (0.865%) at N=3 to 75.53 KB (5.991%) at N=50")
-    print("     - Downlink (Peer Key Broadcast): 8.74 KB at N=3 to 214.23 KB (17.4% of model) at N=50")
-    print("     - Incurred once during initial session enrollment; amortized over the entire FL session.")
-    print("  2. Steady-State (Round 2+) Per-Round Uplink Overhead (Denominator: 1.26 MB Model):")
-    print("     - Model A (Single PRG Seed): 3.28 KB (0.266%) at N=3 to 4.79 KB (0.389%) at N=50")
-    print("     - Model B (Direct Pairwise Mesh): 3.31 KB (0.269%) at N=3 to 42.69 KB (3.467%) at N=50")
-    print("     - Post-Quantum Steady-State Increment: exactly +3.23 KB (+3,229 B, ML-DSA-65 vs Ed25519 signature delta).")
-    print("  3. Shamir Secret Sharing Traffic Scaling:")
-    print("     - Single PRG Seed: N(N-1) shares cohort-wide (2,450 shares / 80.85 KB at N=50).")
-    print("     - Direct Pairwise Mesh: N^2(N-1)/2 shares cohort-wide (61,250 shares / 2.02 MB at N=50).")
+    print("  1. Headline Steady-State Uplink Overhead (Model B: Independent Pairwise Shamir in GF(257)):")
+    print("     - N=3:  3.32 KiB (0.270% of 1.26 MB model update)")
+    print("     - N=10: 4.84 KiB (0.393% of 1.26 MB model update)")
+    print("     - N=20: 10.08 KiB (0.819% of 1.26 MB model update)")
+    print("     - N=50: 47.48 KiB (3.856% of 1.26 MB model update: 1,225 shares @ 37 B + 3,293 B Dilithium3 sig)")
+    print("     - Post-Quantum Steady-State Increment: exactly +3.15 KiB (+3,229 B, Dilithium3 vs Ed25519 signature delta).")
+    print("  2. One-Time Setup (Round 0) Coordination Overhead:")
+    print("     - Uplink (Model B): 10.66 KiB (0.866%) at N=3 to 80.32 KiB (6.523%) at N=50")
+    print("     - Downlink (Broadcast of Peer Keys + Signatures): 8.74 KiB at N=3 to 214.23 KiB (17.40%) at N=50")
+    print("     - Incurred once during initial session enrollment; amortized over the entire multi-round FL session.")
+    print("  3. Shamir Secret Sharing Architecture:")
+    print("     - Code implements Model B (direct pairwise Shamir sharing) because asymmetric KEMs prevent Model A recovery.")
+    print("     - GF(257) 32-element shares require 37 bytes each (36 bytes for 32 9-bit elements + 1 byte index).")
+    print("     - Total shares cohort-wide scale as N^2(N-1)/2 (61,250 shares / 2.21 MiB / 2.27 MB at N=50).")
     print("  4. Dropout Unmasking Latency Scaling (~77x Slowdown):")
     print("     - At 0% dropout: 14.7 ms (N=3) and 100.3 ms (N=50) via direct algebraic cancellation.")
     print("     - At 30% dropout: 35.0 ms (N=3) and 4,439.2 ms (N=50) via polynomial Lagrange reconstruction.")
