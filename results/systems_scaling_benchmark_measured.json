@@ -1,0 +1,1558 @@
+{
+  "metadata": {
+    "title": "RodentNet Systems Scaling Benchmark",
+    "git_commit": "be52ed8",
+    "environment": {
+      "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+      "machine": "AMD64",
+      "system": "Windows",
+      "python_version": "3.12.0",
+      "numpy_version": "2.3.4",
+      "cryptography_version": "46.0.7",
+      "pqc_implementations": {
+        "ml_kem_768": "kyber_py (pure Python reference, NIST FIPS 203 compliant)",
+        "ml_dsa_65": "dilithium_py (pure Python reference, NIST FIPS 204 compliant)"
+      }
+    },
+    "timestamp": "2026-10-13 18:40:06 UTC",
+    "trials_per_configuration": 5
+  },
+  "benchmarks": [
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 3,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 6.176199950277805,
+          "median_ms": 1.3309000059962273,
+          "p95_ms": 20.95237988978624,
+          "std_ms": 9.837237106187228
+        },
+        "client_weight_masking": {
+          "mean_ms": 106.35280003771186,
+          "median_ms": 101.99350025504827,
+          "p95_ms": 120.06867993623018,
+          "std_ms": 9.001841471914224
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 17.031479999423027,
+          "median_ms": 15.602899715304375,
+          "p95_ms": 20.335079915821552,
+          "std_ms": 2.668994111075282
+        },
+        "total_round_latency": {
+          "mean_ms": 129.5647400431335,
+          "median_ms": 123.18870006129146,
+          "p95_ms": 151.78012000396848,
+          "std_ms": 15.542522102133372
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 6,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 192,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 384,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 774,
+        "per_client_coordination_bytes": 258,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.02,
+        "per_client_overhead_pct_f32": 0.026,
+        "cohort_overhead_pct_40bit": 0.02,
+        "cohort_overhead_pct_f32": 0.026,
+        "cryptographic_overhead_percentage": 0.02,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 258,
+          "round_0_setup_uplink_mesh_bytes": 291,
+          "round_0_setup_downlink_bytes": 192,
+          "steady_state_uplink_single_bytes": 130,
+          "steady_state_uplink_mesh_bytes": 163,
+          "steady_state_overhead_pct_single": 0.01,
+          "steady_state_overhead_pct_mesh": 0.013,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 3,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 359.1404000297189,
+          "median_ms": 354.6453001908958,
+          "p95_ms": 415.06320014595985,
+          "std_ms": 42.090818231054634
+        },
+        "client_weight_masking": {
+          "mean_ms": 91.77837986499071,
+          "median_ms": 90.76329972594976,
+          "p95_ms": 95.23887988179922,
+          "std_ms": 2.867325417296382
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 14.71388004720211,
+          "median_ms": 14.056299813091755,
+          "p95_ms": 16.317860037088394,
+          "std_ms": 1.0931508349191943
+        },
+        "total_round_latency": {
+          "mean_ms": 465.6363400630653,
+          "median_ms": 463.97959999740124,
+          "p95_ms": 519.9156199581921,
+          "std_ms": 40.75434767550545
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 3,
+        "signatures_sent_count": 6,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 9408,
+        "ciphertext_bytes": 3264,
+        "signature_bytes": 19758,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 32628,
+        "per_client_coordination_bytes": 10876,
+        "pq_increment_per_client_bytes": 10618,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.863,
+        "per_client_overhead_pct_f32": 1.078,
+        "cohort_overhead_pct_40bit": 0.863,
+        "cohort_overhead_pct_f32": 1.078,
+        "cryptographic_overhead_percentage": 0.863,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 10876,
+          "round_0_setup_uplink_mesh_bytes": 10909,
+          "round_0_setup_downlink_bytes": 8954,
+          "steady_state_uplink_single_bytes": 3359,
+          "steady_state_uplink_mesh_bytes": 3392,
+          "steady_state_overhead_pct_single": 0.266,
+          "steady_state_overhead_pct_mesh": 0.269,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.1,
+      "k_dropouts": 1,
+      "survivors_count": 2,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 1.228019967675209,
+          "median_ms": 1.1522998102009296,
+          "p95_ms": 1.465739868581295,
+          "std_ms": 0.15810572934679298
+        },
+        "client_weight_masking": {
+          "mean_ms": 62.4372199177742,
+          "median_ms": 62.03530030325055,
+          "p95_ms": 66.33937992155552,
+          "std_ms": 2.6718297353330405
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 37.71160002797842,
+          "median_ms": 37.694800179451704,
+          "p95_ms": 38.94440000876784,
+          "std_ms": 0.8663931165318862
+        },
+        "total_round_latency": {
+          "mean_ms": 101.37978000566363,
+          "median_ms": 99.97790027409792,
+          "p95_ms": 106.50818003341556,
+          "std_ms": 3.3760719711609135
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 5,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 192,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 320,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 710,
+        "per_client_coordination_bytes": 258,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.02,
+        "per_client_overhead_pct_f32": 0.026,
+        "cohort_overhead_pct_40bit": 0.028,
+        "cohort_overhead_pct_f32": 0.035,
+        "cryptographic_overhead_percentage": 0.02,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 258,
+          "round_0_setup_uplink_mesh_bytes": 291,
+          "round_0_setup_downlink_bytes": 192,
+          "steady_state_uplink_single_bytes": 130,
+          "steady_state_uplink_mesh_bytes": 163,
+          "steady_state_overhead_pct_single": 0.01,
+          "steady_state_overhead_pct_mesh": 0.013,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.1,
+      "k_dropouts": 1,
+      "survivors_count": 2,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 395.0990199111402,
+          "median_ms": 352.7498999610543,
+          "p95_ms": 506.67920000851154,
+          "std_ms": 76.92932997470665
+        },
+        "client_weight_masking": {
+          "mean_ms": 64.68917997553945,
+          "median_ms": 61.672599986195564,
+          "p95_ms": 74.8574199154973,
+          "std_ms": 6.783022727320789
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 39.8505799472332,
+          "median_ms": 36.58939991146326,
+          "p95_ms": 47.6447400636971,
+          "std_ms": 5.133848824332801
+        },
+        "total_round_latency": {
+          "mean_ms": 499.64241990819573,
+          "median_ms": 459.25340009853244,
+          "p95_ms": 604.7751997597516,
+          "std_ms": 72.80517687490472
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 3,
+        "signatures_sent_count": 5,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 9408,
+        "ciphertext_bytes": 3264,
+        "signature_bytes": 16465,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 29335,
+        "per_client_coordination_bytes": 10876,
+        "pq_increment_per_client_bytes": 10618,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.863,
+        "per_client_overhead_pct_f32": 1.078,
+        "cohort_overhead_pct_40bit": 1.163,
+        "cohort_overhead_pct_f32": 1.454,
+        "cryptographic_overhead_percentage": 0.863,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 10876,
+          "round_0_setup_uplink_mesh_bytes": 10909,
+          "round_0_setup_downlink_bytes": 8954,
+          "steady_state_uplink_single_bytes": 3359,
+          "steady_state_uplink_mesh_bytes": 3392,
+          "steady_state_overhead_pct_single": 0.266,
+          "steady_state_overhead_pct_mesh": 0.269,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.3,
+      "k_dropouts": 1,
+      "survivors_count": 2,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 1.5241598710417747,
+          "median_ms": 1.362900249660015,
+          "p95_ms": 2.0431597717106342,
+          "std_ms": 0.3780735715346159
+        },
+        "client_weight_masking": {
+          "mean_ms": 62.868639919906855,
+          "median_ms": 62.170600052922964,
+          "p95_ms": 64.67248005792499,
+          "std_ms": 1.4195105172128506
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 38.247320242226124,
+          "median_ms": 38.480200339108706,
+          "p95_ms": 40.23298015818,
+          "std_ms": 1.6340579057330828
+        },
+        "total_round_latency": {
+          "mean_ms": 102.64312010258436,
+          "median_ms": 101.79270012304187,
+          "p95_ms": 106.82089999318123,
+          "std_ms": 3.032269342897647
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 5,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 192,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 320,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 710,
+        "per_client_coordination_bytes": 258,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.02,
+        "per_client_overhead_pct_f32": 0.026,
+        "cohort_overhead_pct_40bit": 0.028,
+        "cohort_overhead_pct_f32": 0.035,
+        "cryptographic_overhead_percentage": 0.02,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 258,
+          "round_0_setup_uplink_mesh_bytes": 291,
+          "round_0_setup_downlink_bytes": 192,
+          "steady_state_uplink_single_bytes": 130,
+          "steady_state_uplink_mesh_bytes": 163,
+          "steady_state_overhead_pct_single": 0.01,
+          "steady_state_overhead_pct_mesh": 0.013,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 3,
+      "dropout_rate": 0.3,
+      "k_dropouts": 1,
+      "survivors_count": 2,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 399.42466001957655,
+          "median_ms": 399.2115999571979,
+          "p95_ms": 554.1325201280415,
+          "std_ms": 112.8072114310826
+        },
+        "client_weight_masking": {
+          "mean_ms": 55.862100049853325,
+          "median_ms": 56.76210019737482,
+          "p95_ms": 62.349900137633085,
+          "std_ms": 5.427454950002298
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 34.98535994440317,
+          "median_ms": 33.85109966620803,
+          "p95_ms": 41.492240224033594,
+          "std_ms": 4.551918237734819
+        },
+        "total_round_latency": {
+          "mean_ms": 490.27522010728717,
+          "median_ms": 487.7636004239321,
+          "p95_ms": 656.827840115875,
+          "std_ms": 121.7236107933588
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 6,
+        "ciphertexts_sent_count": 3,
+        "signatures_sent_count": 5,
+        "shamir_shares_sent_count": 6,
+        "key_bytes": 9408,
+        "ciphertext_bytes": 3264,
+        "signature_bytes": 16465,
+        "share_bytes": 198,
+        "total_cohort_coordination_bytes": 29335,
+        "per_client_coordination_bytes": 10876,
+        "pq_increment_per_client_bytes": 10618,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.863,
+        "per_client_overhead_pct_f32": 1.078,
+        "cohort_overhead_pct_40bit": 1.163,
+        "cohort_overhead_pct_f32": 1.454,
+        "cryptographic_overhead_percentage": 0.863,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 10876,
+          "round_0_setup_uplink_mesh_bytes": 10909,
+          "round_0_setup_downlink_bytes": 8954,
+          "steady_state_uplink_single_bytes": 3359,
+          "steady_state_uplink_mesh_bytes": 3392,
+          "steady_state_overhead_pct_single": 0.266,
+          "steady_state_overhead_pct_mesh": 0.269,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 10,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 8.961580228060484,
+          "median_ms": 8.571300189942122,
+          "p95_ms": 11.154000367969275,
+          "std_ms": 1.8250039253041352
+        },
+        "client_weight_masking": {
+          "mean_ms": 915.0094600394368,
+          "median_ms": 921.0184998810291,
+          "p95_ms": 931.9061202928424,
+          "std_ms": 16.591528659364904
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 31.11100010573864,
+          "median_ms": 31.62850020453334,
+          "p95_ms": 32.21558006480336,
+          "std_ms": 1.3651735941013314
+        },
+        "total_round_latency": {
+          "mean_ms": 955.0853800028563,
+          "median_ms": 962.2693001292646,
+          "p95_ms": 971.4802600443363,
+          "std_ms": 16.799629394043073
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 20,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 640,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 1280,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 4890,
+        "per_client_coordination_bytes": 489,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.039,
+        "per_client_overhead_pct_f32": 0.048,
+        "cohort_overhead_pct_40bit": 0.039,
+        "cohort_overhead_pct_f32": 0.048,
+        "cryptographic_overhead_percentage": 0.039,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 489,
+          "round_0_setup_uplink_mesh_bytes": 1677,
+          "round_0_setup_downlink_bytes": 864,
+          "steady_state_uplink_single_bytes": 361,
+          "steady_state_uplink_mesh_bytes": 1549,
+          "steady_state_overhead_pct_single": 0.029,
+          "steady_state_overhead_pct_mesh": 0.123,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 10,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 1599.7697601094842,
+          "median_ms": 1536.3766001537442,
+          "p95_ms": 1832.2853399440646,
+          "std_ms": 165.97356446782186
+        },
+        "client_weight_masking": {
+          "mean_ms": 924.7017201036215,
+          "median_ms": 932.3340002447367,
+          "p95_ms": 941.6796199977398,
+          "std_ms": 16.38895198089314
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 30.801060050725937,
+          "median_ms": 30.592000111937523,
+          "p95_ms": 31.496860273182392,
+          "std_ms": 0.4602573488505338
+        },
+        "total_round_latency": {
+          "mean_ms": 2555.2758400328457,
+          "median_ms": 2510.154299903661,
+          "p95_ms": 2796.2309000082314,
+          "std_ms": 174.70389357042558
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 45,
+        "signatures_sent_count": 20,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 31360,
+        "ciphertext_bytes": 48960,
+        "signature_bytes": 65860,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 149150,
+        "per_client_coordination_bytes": 15459,
+        "pq_increment_per_client_bytes": 14970,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.226,
+        "per_client_overhead_pct_f32": 1.533,
+        "cohort_overhead_pct_40bit": 1.183,
+        "cohort_overhead_pct_f32": 1.479,
+        "cryptographic_overhead_percentage": 1.226,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 15459,
+          "round_0_setup_uplink_mesh_bytes": 16647,
+          "round_0_setup_downlink_bytes": 40293,
+          "steady_state_uplink_single_bytes": 3590,
+          "steady_state_uplink_mesh_bytes": 4778,
+          "steady_state_overhead_pct_single": 0.285,
+          "steady_state_overhead_pct_mesh": 0.379,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.1,
+      "k_dropouts": 1,
+      "survivors_count": 9,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 8.391920011490583,
+          "median_ms": 8.241199888288975,
+          "p95_ms": 10.173960030078888,
+          "std_ms": 1.2485105102983884
+        },
+        "client_weight_masking": {
+          "mean_ms": 855.1156600005925,
+          "median_ms": 856.201299931854,
+          "p95_ms": 889.616739936173,
+          "std_ms": 25.753372340372565
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 140.64071998000145,
+          "median_ms": 143.08249996975064,
+          "p95_ms": 146.12794015556574,
+          "std_ms": 7.306005467154066
+        },
+        "total_round_latency": {
+          "mean_ms": 1004.1510200127959,
+          "median_ms": 998.9028996787965,
+          "p95_ms": 1041.6523600928485,
+          "std_ms": 25.85811824112344
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 19,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 640,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 1216,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 4826,
+        "per_client_coordination_bytes": 489,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.039,
+        "per_client_overhead_pct_f32": 0.048,
+        "cohort_overhead_pct_40bit": 0.043,
+        "cohort_overhead_pct_f32": 0.053,
+        "cryptographic_overhead_percentage": 0.039,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 489,
+          "round_0_setup_uplink_mesh_bytes": 1677,
+          "round_0_setup_downlink_bytes": 864,
+          "steady_state_uplink_single_bytes": 361,
+          "steady_state_uplink_mesh_bytes": 1549,
+          "steady_state_overhead_pct_single": 0.029,
+          "steady_state_overhead_pct_mesh": 0.123,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.1,
+      "k_dropouts": 1,
+      "survivors_count": 9,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 1656.499900110066,
+          "median_ms": 1626.896900124848,
+          "p95_ms": 1870.1508599333465,
+          "std_ms": 143.9301136476837
+        },
+        "client_weight_masking": {
+          "mean_ms": 940.8125201240182,
+          "median_ms": 953.3091001212597,
+          "p95_ms": 987.2637201100588,
+          "std_ms": 38.61983533437808
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 146.3364800438285,
+          "median_ms": 149.31390015408397,
+          "p95_ms": 156.49694008752704,
+          "std_ms": 9.354815617358824
+        },
+        "total_round_latency": {
+          "mean_ms": 2743.6516200192273,
+          "median_ms": 2680.3704001940787,
+          "p95_ms": 2984.987180121243,
+          "std_ms": 167.78605655934075
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 45,
+        "signatures_sent_count": 19,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 31360,
+        "ciphertext_bytes": 48960,
+        "signature_bytes": 62567,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 145857,
+        "per_client_coordination_bytes": 15459,
+        "pq_increment_per_client_bytes": 14970,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.226,
+        "per_client_overhead_pct_f32": 1.533,
+        "cohort_overhead_pct_40bit": 1.285,
+        "cohort_overhead_pct_f32": 1.607,
+        "cryptographic_overhead_percentage": 1.226,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 15459,
+          "round_0_setup_uplink_mesh_bytes": 16647,
+          "round_0_setup_downlink_bytes": 40293,
+          "steady_state_uplink_single_bytes": 3590,
+          "steady_state_uplink_mesh_bytes": 4778,
+          "steady_state_overhead_pct_single": 0.285,
+          "steady_state_overhead_pct_mesh": 0.379,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.3,
+      "k_dropouts": 3,
+      "survivors_count": 7,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 9.115200024098158,
+          "median_ms": 9.787200018763542,
+          "p95_ms": 10.605220030993223,
+          "std_ms": 1.4360765583894262
+        },
+        "client_weight_masking": {
+          "mean_ms": 739.7651601582766,
+          "median_ms": 747.7337000891566,
+          "p95_ms": 761.7646003141999,
+          "std_ms": 19.942373482002587
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 296.1619601584971,
+          "median_ms": 297.37180005759,
+          "p95_ms": 308.53784028440714,
+          "std_ms": 12.334449110515584
+        },
+        "total_round_latency": {
+          "mean_ms": 1045.0451401993632,
+          "median_ms": 1039.454400073737,
+          "p95_ms": 1068.5221002437174,
+          "std_ms": 20.718647480939083
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 17,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 640,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 1088,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 4698,
+        "per_client_coordination_bytes": 489,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.039,
+        "per_client_overhead_pct_f32": 0.048,
+        "cohort_overhead_pct_40bit": 0.053,
+        "cohort_overhead_pct_f32": 0.067,
+        "cryptographic_overhead_percentage": 0.039,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 489,
+          "round_0_setup_uplink_mesh_bytes": 1677,
+          "round_0_setup_downlink_bytes": 864,
+          "steady_state_uplink_single_bytes": 361,
+          "steady_state_uplink_mesh_bytes": 1549,
+          "steady_state_overhead_pct_single": 0.029,
+          "steady_state_overhead_pct_mesh": 0.123,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 10,
+      "dropout_rate": 0.3,
+      "k_dropouts": 3,
+      "survivors_count": 7,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 1724.400280136615,
+          "median_ms": 1820.1454002410173,
+          "p95_ms": 1953.2839602790773,
+          "std_ms": 197.67881644348728
+        },
+        "client_weight_masking": {
+          "mean_ms": 653.7792598828673,
+          "median_ms": 653.328699991107,
+          "p95_ms": 673.4476199373603,
+          "std_ms": 17.62253877896967
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 268.80368012934923,
+          "median_ms": 265.1615999639034,
+          "p95_ms": 292.10943998768926,
+          "std_ms": 16.17705067909577
+        },
+        "total_round_latency": {
+          "mean_ms": 2646.9858000054955,
+          "median_ms": 2758.172099944204,
+          "p95_ms": 2859.842299949378,
+          "std_ms": 200.0306280929717
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 20,
+        "ciphertexts_sent_count": 45,
+        "signatures_sent_count": 17,
+        "shamir_shares_sent_count": 90,
+        "key_bytes": 31360,
+        "ciphertext_bytes": 48960,
+        "signature_bytes": 55981,
+        "share_bytes": 2970,
+        "total_cohort_coordination_bytes": 139271,
+        "per_client_coordination_bytes": 15459,
+        "pq_increment_per_client_bytes": 14970,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.226,
+        "per_client_overhead_pct_f32": 1.533,
+        "cohort_overhead_pct_40bit": 1.578,
+        "cohort_overhead_pct_f32": 1.972,
+        "cryptographic_overhead_percentage": 1.226,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 15459,
+          "round_0_setup_uplink_mesh_bytes": 16647,
+          "round_0_setup_downlink_bytes": 40293,
+          "steady_state_uplink_single_bytes": 3590,
+          "steady_state_uplink_mesh_bytes": 4778,
+          "steady_state_overhead_pct_single": 0.285,
+          "steady_state_overhead_pct_mesh": 0.379,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 20,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 41.38617990538478,
+          "median_ms": 42.35129989683628,
+          "p95_ms": 42.99357999116182,
+          "std_ms": 1.6293972118295847
+        },
+        "client_weight_masking": {
+          "mean_ms": 3683.2376199774444,
+          "median_ms": 3722.63399977237,
+          "p95_ms": 3751.6969398595393,
+          "std_ms": 68.56053980982519
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 56.2466399744153,
+          "median_ms": 57.56800016388297,
+          "p95_ms": 60.85869986563921,
+          "std_ms": 4.352943494765154
+        },
+        "total_round_latency": {
+          "mean_ms": 3780.873619951308,
+          "median_ms": 3819.125700276345,
+          "p95_ms": 3842.942740023136,
+          "std_ms": 65.39002518165047
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 40,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 1280,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 2560,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 16380,
+        "per_client_coordination_bytes": 819,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.065,
+        "per_client_overhead_pct_f32": 0.081,
+        "cohort_overhead_pct_40bit": 0.065,
+        "cohort_overhead_pct_f32": 0.081,
+        "cryptographic_overhead_percentage": 0.065,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 819,
+          "round_0_setup_uplink_mesh_bytes": 6462,
+          "round_0_setup_downlink_bytes": 1824,
+          "steady_state_uplink_single_bytes": 691,
+          "steady_state_uplink_mesh_bytes": 6334,
+          "steady_state_overhead_pct_single": 0.055,
+          "steady_state_overhead_pct_mesh": 0.502,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 20,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 4538.436879962683,
+          "median_ms": 4543.717700056732,
+          "p95_ms": 4969.383939914405,
+          "std_ms": 335.88441603170463
+        },
+        "client_weight_masking": {
+          "mean_ms": 3841.489919926971,
+          "median_ms": 3816.79999968037,
+          "p95_ms": 3966.516039893031,
+          "std_ms": 99.62615210503506
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 63.24621997773647,
+          "median_ms": 61.906700022518635,
+          "p95_ms": 73.24083978310227,
+          "std_ms": 7.157356377068449
+        },
+        "total_round_latency": {
+          "mean_ms": 8443.175959959626,
+          "median_ms": 8316.498199943453,
+          "p95_ms": 8801.92152010277,
+          "std_ms": 265.6002587006529
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 190,
+        "signatures_sent_count": 40,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 62720,
+        "ciphertext_bytes": 206720,
+        "signature_bytes": 131720,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 413700,
+        "per_client_coordination_bytes": 21229,
+        "pq_increment_per_client_bytes": 20410,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.684,
+        "per_client_overhead_pct_f32": 2.105,
+        "cohort_overhead_pct_40bit": 1.641,
+        "cohort_overhead_pct_f32": 2.051,
+        "cryptographic_overhead_percentage": 1.684,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 21229,
+          "round_0_setup_uplink_mesh_bytes": 26872,
+          "round_0_setup_downlink_bytes": 85063,
+          "steady_state_uplink_single_bytes": 3920,
+          "steady_state_uplink_mesh_bytes": 9563,
+          "steady_state_overhead_pct_single": 0.311,
+          "steady_state_overhead_pct_mesh": 0.758,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.1,
+      "k_dropouts": 2,
+      "survivors_count": 18,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 38.285059947520494,
+          "median_ms": 37.663799710571766,
+          "p95_ms": 45.503200218081474,
+          "std_ms": 5.423313181423683
+        },
+        "client_weight_masking": {
+          "mean_ms": 3665.0489201769233,
+          "median_ms": 3655.0650000572205,
+          "p95_ms": 3781.455040164292,
+          "std_ms": 83.17678148916103
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 495.8745399489999,
+          "median_ms": 490.26709981262684,
+          "p95_ms": 524.9067000113428,
+          "std_ms": 26.343459531133607
+        },
+        "total_round_latency": {
+          "mean_ms": 4199.211240001023,
+          "median_ms": 4191.073900088668,
+          "p95_ms": 4307.916679978371,
+          "std_ms": 74.72716044717316
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 38,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 1280,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 2432,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 16252,
+        "per_client_coordination_bytes": 819,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.065,
+        "per_client_overhead_pct_f32": 0.081,
+        "cohort_overhead_pct_40bit": 0.072,
+        "cohort_overhead_pct_f32": 0.09,
+        "cryptographic_overhead_percentage": 0.065,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 819,
+          "round_0_setup_uplink_mesh_bytes": 6462,
+          "round_0_setup_downlink_bytes": 1824,
+          "steady_state_uplink_single_bytes": 691,
+          "steady_state_uplink_mesh_bytes": 6334,
+          "steady_state_overhead_pct_single": 0.055,
+          "steady_state_overhead_pct_mesh": 0.502,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.1,
+      "k_dropouts": 2,
+      "survivors_count": 18,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 4739.625639934093,
+          "median_ms": 4614.86200010404,
+          "p95_ms": 5243.172559700906,
+          "std_ms": 337.0889297621775
+        },
+        "client_weight_masking": {
+          "mean_ms": 3315.668619889766,
+          "median_ms": 3323.1931002810597,
+          "p95_ms": 3398.691239859909,
+          "std_ms": 60.74377968087306
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 480.5218799971044,
+          "median_ms": 462.7481000497937,
+          "p95_ms": 518.5352201573551,
+          "std_ms": 30.429109223378433
+        },
+        "total_round_latency": {
+          "mean_ms": 8535.819500032812,
+          "median_ms": 8399.287300184369,
+          "p95_ms": 9028.624939918518,
+          "std_ms": 327.7584171701325
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 190,
+        "signatures_sent_count": 38,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 62720,
+        "ciphertext_bytes": 206720,
+        "signature_bytes": 125134,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 407114,
+        "per_client_coordination_bytes": 21229,
+        "pq_increment_per_client_bytes": 20410,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.684,
+        "per_client_overhead_pct_f32": 2.105,
+        "cohort_overhead_pct_40bit": 1.794,
+        "cohort_overhead_pct_f32": 2.242,
+        "cryptographic_overhead_percentage": 1.684,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 21229,
+          "round_0_setup_uplink_mesh_bytes": 26872,
+          "round_0_setup_downlink_bytes": 85063,
+          "steady_state_uplink_single_bytes": 3920,
+          "steady_state_uplink_mesh_bytes": 9563,
+          "steady_state_overhead_pct_single": 0.311,
+          "steady_state_overhead_pct_mesh": 0.758,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.3,
+      "k_dropouts": 6,
+      "survivors_count": 14,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 36.46078007295728,
+          "median_ms": 35.04669992253184,
+          "p95_ms": 43.163260258734226,
+          "std_ms": 4.3978158274846395
+        },
+        "client_weight_masking": {
+          "mean_ms": 2664.294300042093,
+          "median_ms": 2601.2741001322865,
+          "p95_ms": 2880.3370598703623,
+          "std_ms": 149.81237093867583
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 1036.2093600444496,
+          "median_ms": 1011.806100141257,
+          "p95_ms": 1137.803800124675,
+          "std_ms": 74.63550925387669
+        },
+        "total_round_latency": {
+          "mean_ms": 3736.9677199982107,
+          "median_ms": 3693.9103002659976,
+          "p95_ms": 3886.189359705895,
+          "std_ms": 124.57395396165356
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 34,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 1280,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 2176,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 15996,
+        "per_client_coordination_bytes": 819,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.065,
+        "per_client_overhead_pct_f32": 0.081,
+        "cohort_overhead_pct_40bit": 0.091,
+        "cohort_overhead_pct_f32": 0.113,
+        "cryptographic_overhead_percentage": 0.065,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 819,
+          "round_0_setup_uplink_mesh_bytes": 6462,
+          "round_0_setup_downlink_bytes": 1824,
+          "steady_state_uplink_single_bytes": 691,
+          "steady_state_uplink_mesh_bytes": 6334,
+          "steady_state_overhead_pct_single": 0.055,
+          "steady_state_overhead_pct_mesh": 0.502,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 20,
+      "dropout_rate": 0.3,
+      "k_dropouts": 6,
+      "survivors_count": 14,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 6950.624579936266,
+          "median_ms": 7841.26040013507,
+          "p95_ms": 8884.922559838742,
+          "std_ms": 1919.4645926081616
+        },
+        "client_weight_masking": {
+          "mean_ms": 3964.6226599812508,
+          "median_ms": 4778.167299926281,
+          "p95_ms": 4920.141119975597,
+          "std_ms": 1104.7404025300477
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 1482.5697800144553,
+          "median_ms": 1741.0327000543475,
+          "p95_ms": 1830.5231600999832,
+          "std_ms": 373.0756349627845
+        },
+        "total_round_latency": {
+          "mean_ms": 12397.820580005646,
+          "median_ms": 14360.46430002898,
+          "p95_ms": 15613.742360007018,
+          "std_ms": 3386.38092755798
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 40,
+        "ciphertexts_sent_count": 190,
+        "signatures_sent_count": 34,
+        "shamir_shares_sent_count": 380,
+        "key_bytes": 62720,
+        "ciphertext_bytes": 206720,
+        "signature_bytes": 111962,
+        "share_bytes": 12540,
+        "total_cohort_coordination_bytes": 393942,
+        "per_client_coordination_bytes": 21229,
+        "pq_increment_per_client_bytes": 20410,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 1.684,
+        "per_client_overhead_pct_f32": 2.105,
+        "cohort_overhead_pct_40bit": 2.232,
+        "cohort_overhead_pct_f32": 2.79,
+        "cryptographic_overhead_percentage": 1.684,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 21229,
+          "round_0_setup_uplink_mesh_bytes": 26872,
+          "round_0_setup_downlink_bytes": 85063,
+          "steady_state_uplink_single_bytes": 3920,
+          "steady_state_uplink_mesh_bytes": 9563,
+          "steady_state_overhead_pct_single": 0.311,
+          "steady_state_overhead_pct_mesh": 0.758,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 50,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 392.8827998849253,
+          "median_ms": 259.5907999202609,
+          "p95_ms": 640.2142098173499,
+          "std_ms": 205.01018811624837
+        },
+        "client_weight_masking": {
+          "mean_ms": 21284.55866655956,
+          "median_ms": 17268.281299620867,
+          "p95_ms": 28119.083780050278,
+          "std_ms": 5685.259461188017
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 100.51813318083684,
+          "median_ms": 100.20909970626235,
+          "p95_ms": 101.25534981489182,
+          "std_ms": 0.6110958688399503
+        },
+        "total_round_latency": {
+          "mean_ms": 21777.963366669912,
+          "median_ms": 17621.632600203156,
+          "p95_ms": 28858.654149761423,
+          "std_ms": 5889.67215423001
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 100,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 3200,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 6400,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 90450,
+        "per_client_coordination_bytes": 1809,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.143,
+        "per_client_overhead_pct_f32": 0.179,
+        "cohort_overhead_pct_40bit": 0.143,
+        "cohort_overhead_pct_f32": 0.179,
+        "cryptographic_overhead_percentage": 0.143,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 1809,
+          "round_0_setup_uplink_mesh_bytes": 40617,
+          "round_0_setup_downlink_bytes": 4704,
+          "steady_state_uplink_single_bytes": 1681,
+          "steady_state_uplink_mesh_bytes": 40489,
+          "steady_state_overhead_pct_single": 0.133,
+          "steady_state_overhead_pct_mesh": 3.211,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.0,
+      "k_dropouts": 0,
+      "survivors_count": 50,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 16072.055500000715,
+          "median_ms": 16122.389799915254,
+          "p95_ms": 16527.188289910555,
+          "std_ms": 430.3616004437507
+        },
+        "client_weight_masking": {
+          "mean_ms": 17480.730233248323,
+          "median_ms": 17430.978499818593,
+          "p95_ms": 17613.109429972246,
+          "std_ms": 110.07258026451774
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 100.3352333791554,
+          "median_ms": 100.16389982774854,
+          "p95_ms": 101.80901009589434,
+          "std_ms": 1.288343408601487
+        },
+        "total_round_latency": {
+          "mean_ms": 33653.12446700409,
+          "median_ms": 33599.10890040919,
+          "p95_ms": 34054.53671035357,
+          "std_ms": 349.1128553652337
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 1225,
+        "signatures_sent_count": 100,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 156800,
+        "ciphertext_bytes": 1332800,
+        "signature_bytes": 329300,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 1899750,
+        "per_client_coordination_bytes": 38539,
+        "pq_increment_per_client_bytes": 36730,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 3.057,
+        "per_client_overhead_pct_f32": 3.821,
+        "cohort_overhead_pct_40bit": 3.013,
+        "cohort_overhead_pct_f32": 3.767,
+        "cryptographic_overhead_percentage": 3.057,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 38539,
+          "round_0_setup_uplink_mesh_bytes": 77347,
+          "round_0_setup_downlink_bytes": 219373,
+          "steady_state_uplink_single_bytes": 4910,
+          "steady_state_uplink_mesh_bytes": 43718,
+          "steady_state_overhead_pct_single": 0.389,
+          "steady_state_overhead_pct_mesh": 3.467,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.1,
+      "k_dropouts": 5,
+      "survivors_count": 45,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 260.3444332877795,
+          "median_ms": 266.9334998354316,
+          "p95_ms": 270.09384990669787,
+          "std_ms": 11.888104694070737
+        },
+        "client_weight_masking": {
+          "mean_ms": 15832.274899973223,
+          "median_ms": 15841.79909992963,
+          "p95_ms": 15934.430699935183,
+          "std_ms": 95.93847751142322
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 2116.1959332724414,
+          "median_ms": 2000.0184997916222,
+          "p95_ms": 2330.044899880886,
+          "std_ms": 177.29851317612028
+        },
+        "total_round_latency": {
+          "mean_ms": 18208.818499930203,
+          "median_ms": 18193.514000158757,
+          "p95_ms": 18426.306379772723,
+          "std_ms": 192.75345959101446
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 95,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 3200,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 6080,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 90130,
+        "per_client_coordination_bytes": 1809,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.143,
+        "per_client_overhead_pct_f32": 0.179,
+        "cohort_overhead_pct_40bit": 0.159,
+        "cohort_overhead_pct_f32": 0.199,
+        "cryptographic_overhead_percentage": 0.143,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 1809,
+          "round_0_setup_uplink_mesh_bytes": 40617,
+          "round_0_setup_downlink_bytes": 4704,
+          "steady_state_uplink_single_bytes": 1681,
+          "steady_state_uplink_mesh_bytes": 40489,
+          "steady_state_overhead_pct_single": 0.133,
+          "steady_state_overhead_pct_mesh": 3.211,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.1,
+      "k_dropouts": 5,
+      "survivors_count": 45,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 15958.361866728714,
+          "median_ms": 15984.389000106603,
+          "p95_ms": 16034.282030211762,
+          "std_ms": 79.30547647911682
+        },
+        "client_weight_masking": {
+          "mean_ms": 15850.361033342779,
+          "median_ms": 15998.395200353116,
+          "p95_ms": 16063.82024991326,
+          "std_ms": 262.43811094005997
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 2091.1518333790204,
+          "median_ms": 2122.89460003376,
+          "p95_ms": 2142.061720136553,
+          "std_ms": 60.5773415800056
+        },
+        "total_round_latency": {
+          "mean_ms": 33899.87813324357,
+          "median_ms": 34066.15490000695,
+          "p95_ms": 34101.729829842225,
+          "std_ms": 263.59557775520284
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 1225,
+        "signatures_sent_count": 95,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 156800,
+        "ciphertext_bytes": 1332800,
+        "signature_bytes": 312835,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 1883285,
+        "per_client_coordination_bytes": 38539,
+        "pq_increment_per_client_bytes": 36730,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 3.057,
+        "per_client_overhead_pct_f32": 3.821,
+        "cohort_overhead_pct_40bit": 3.319,
+        "cohort_overhead_pct_f32": 4.149,
+        "cryptographic_overhead_percentage": 3.057,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 38539,
+          "round_0_setup_uplink_mesh_bytes": 77347,
+          "round_0_setup_downlink_bytes": 219373,
+          "steady_state_uplink_single_bytes": 4910,
+          "steady_state_uplink_mesh_bytes": 43718,
+          "steady_state_overhead_pct_single": 0.389,
+          "steady_state_overhead_pct_mesh": 3.467,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.3,
+      "k_dropouts": 15,
+      "survivors_count": 35,
+      "crypto_mode": "classical",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 259.28023317828774,
+          "median_ms": 264.7998998872936,
+          "p95_ms": 269.2552598658949,
+          "std_ms": 11.485651788069998
+        },
+        "client_weight_masking": {
+          "mean_ms": 12361.315066770961,
+          "median_ms": 12405.675600282848,
+          "p95_ms": 12778.065180033445,
+          "std_ms": 393.421493176785
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 4694.629199958096,
+          "median_ms": 4610.759299714118,
+          "p95_ms": 5054.625080153346,
+          "std_ms": 305.77029180013704
+        },
+        "total_round_latency": {
+          "mean_ms": 17315.227599969756,
+          "median_ms": 17286.187899764627,
+          "p95_ms": 17436.705340072513,
+          "std_ms": 103.05250325834083
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 0,
+        "signatures_sent_count": 85,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 3200,
+        "ciphertext_bytes": 0,
+        "signature_bytes": 5440,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 89490,
+        "per_client_coordination_bytes": 1809,
+        "pq_increment_per_client_bytes": 0,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 0.143,
+        "per_client_overhead_pct_f32": 0.179,
+        "cohort_overhead_pct_40bit": 0.203,
+        "cohort_overhead_pct_f32": 0.253,
+        "cryptographic_overhead_percentage": 0.143,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 1809,
+          "round_0_setup_uplink_mesh_bytes": 40617,
+          "round_0_setup_downlink_bytes": 4704,
+          "steady_state_uplink_single_bytes": 1681,
+          "steady_state_uplink_mesh_bytes": 40489,
+          "steady_state_overhead_pct_single": 0.133,
+          "steady_state_overhead_pct_mesh": 3.211,
+          "pq_steady_state_increment_bytes": 0
+        }
+      }
+    },
+    {
+      "n_clients": 50,
+      "dropout_rate": 0.3,
+      "k_dropouts": 15,
+      "survivors_count": 35,
+      "crypto_mode": "post_quantum",
+      "timing": {
+        "setup_key_agreement": {
+          "mean_ms": 16326.100633324435,
+          "median_ms": 16094.005399849266,
+          "p95_ms": 16756.957550207153,
+          "std_ms": 357.12798276108094
+        },
+        "client_weight_masking": {
+          "mean_ms": 12183.543700103959,
+          "median_ms": 12303.341099992394,
+          "p95_ms": 12334.838400315493,
+          "std_ms": 194.69067780272283
+        },
+        "server_aggregation_and_unmasking": {
+          "mean_ms": 4439.19746670872,
+          "median_ms": 4393.575900234282,
+          "p95_ms": 4522.574879927561,
+          "std_ms": 69.14228333829912
+        },
+        "total_round_latency": {
+          "mean_ms": 32948.84486667191,
+          "median_ms": 32779.126700013876,
+          "p95_ms": 33581.69629992917,
+          "std_ms": 533.906770433723
+        }
+      },
+      "network_traffic": {
+        "keys_sent_count": 100,
+        "ciphertexts_sent_count": 1225,
+        "signatures_sent_count": 85,
+        "shamir_shares_sent_count": 2450,
+        "key_bytes": 156800,
+        "ciphertext_bytes": 1332800,
+        "signature_bytes": 279905,
+        "share_bytes": 80850,
+        "total_cohort_coordination_bytes": 1850355,
+        "per_client_coordination_bytes": 38539,
+        "pq_increment_per_client_bytes": 36730,
+        "model_update_bytes_40bit_packed": 1260850,
+        "model_update_bytes_f32": 1008680,
+        "model_update_bytes_int64": 2017360,
+        "per_client_overhead_pct_40bit": 3.057,
+        "per_client_overhead_pct_f32": 3.821,
+        "cohort_overhead_pct_40bit": 4.193,
+        "cohort_overhead_pct_f32": 5.241,
+        "cryptographic_overhead_percentage": 3.057,
+        "regimes": {
+          "round_0_setup_uplink_single_bytes": 38539,
+          "round_0_setup_uplink_mesh_bytes": 77347,
+          "round_0_setup_downlink_bytes": 219373,
+          "steady_state_uplink_single_bytes": 4910,
+          "steady_state_uplink_mesh_bytes": 43718,
+          "steady_state_overhead_pct_single": 0.389,
+          "steady_state_overhead_pct_mesh": 3.467,
+          "pq_steady_state_increment_bytes": 3229
+        }
+      }
+    }
+  ]
+}

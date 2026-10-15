@@ -7,7 +7,8 @@ from typing import Iterable, Sequence
 import numpy as np
 
 BYTE_FIELD = 257
-VECTOR_FIELD = 2_147_483_647
+# 40-bit prime (2^40 - 87): supports large weighted sample aggregation without int64 overflow
+VECTOR_FIELD = 1_099_511_627_689
 
 
 @dataclass(frozen=True)
@@ -117,7 +118,8 @@ def encode_signed_array(values: np.ndarray, scale: int = 1_000_000, field: int =
 
 
 def decode_signed_array(values: np.ndarray, scale: int = 1_000_000, field: int = VECTOR_FIELD) -> np.ndarray:
-    residues = np.mod(np.rint(values).astype(np.int64), field)
+    int_vals = values.astype(np.int64) if np.issubdtype(values.dtype, np.integer) else np.rint(values).astype(np.int64)
+    residues = np.mod(int_vals, field)
     signed = np.where(residues > field // 2, residues - field, residues)
     return signed.astype(np.float64) / scale
 

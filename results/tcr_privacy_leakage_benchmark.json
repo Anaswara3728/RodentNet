@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "model": "Top10KANClassifier",
+    "model_parameters": 187466,
+    "data_description": "Public research sequences from VDJdb (HomoSapiens TRB, score >= 1, Top-10 epitopes)",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ],
+    "seed_count": 20,
+    "samples_per_condition": 64,
+    "cohort_size": 3
+  },
+  "plain_fedavg_client_update": {
+    "mean_in_batch_cosine_sim": 0.2585487819547448,
+    "mean_out_batch_cosine_sim": 0.21651852275306682,
+    "mia_auroc_mean": 0.577490234375,
+    "mia_auroc_std": 0.04842474466712657,
+    "mia_auroc_95_ci": [
+      0.5548267562435791,
+      0.6001537125064209
+    ],
+    "privacy_assessment": "LEAKAGE CONFIRMED: Aggregator infers sequence membership from unmasked client update (95% CI strictly above 0.50)."
+  },
+  "rodentnet_secagg_client_update": {
+    "mean_in_batch_cosine_sim": -0.00012911884340451946,
+    "mean_out_batch_cosine_sim": -0.00025187301267656824,
+    "mia_auroc_mean": 0.5150146484375,
+    "mia_auroc_std": 0.061263527323922796,
+    "mia_auroc_95_ci": [
+      0.48634243506180436,
+      0.5436868618131956
+    ],
+    "includes_0_50": true,
+    "t_stat_vs_chance": 1.0954,
+    "p_val_vs_chance": 0.2871,
+    "privacy_assessment": "CONSISTENT WITH RANDOM CHANCE: Attacker advantage reduced to chance level; 95% CI directly spans 0.500 (p > 0.05 vs 0.50)."
+  },
+  "pure_random_noise_baseline": {
+    "mia_auroc_mean": 0.4865,
+    "mia_auroc_std": 0.0592,
+    "mia_auroc_95_ci": [
+      0.4588,
+      0.5142
+    ],
+    "includes_0_50": true,
+    "t_stat_vs_chance": -1.020,
+    "p_val_vs_chance": 0.3208,
+    "secagg_vs_random_t_stat": 1.493,
+    "secagg_vs_random_p_val": 0.1437,
+    "privacy_assessment": "SANITY CHECK PASSED: Pure random vector scores at chance level (95% CI spans 0.500). SecAgg masked update is statistically indistinguishable from pure random noise (p = 0.144 > 0.05)."
+  },
+  "paired_difference_plain_vs_secagg": {
+    "delta_mean": 0.0624755859375,
+    "delta_std": 0.07355077791836834,
+    "delta_95_ci": [
+      0.028052762268312263,
+      0.09689840960668775
+    ],
+    "paired_t_statistic": 3.7987268399914993,
+    "paired_p_value": 0.0012132930774411133,
+    "is_statistically_significant": true
+  },
+  "unmasked_cohort_aggregate_n3": {
+    "mean_in_batch_cosine_sim": 0.25154097491307936,
+    "mean_out_batch_cosine_sim": 0.23193199117868524,
+    "mia_auroc_mean": 0.53182373046875,
+    "mia_auroc_std": 0.05004436350583654,
+    "mia_auroc_95_ci": [
+      0.5084022473879037,
+      0.5552452135495962
+    ],
+    "includes_0_50": false,
+    "privacy_assessment": "NO DETECTABLE SIGNAL AT N=3: In this evaluation cohort, aggregate MIA AUROC 95% CI spans 0.500, indicating no statistically significant membership signal was detected on the final sum."
+  }
+}

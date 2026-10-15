@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "git_commit": "be52ed8",
+    "timestamp": "2026-10-15 09:19:39 UTC",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "epochs": 10,
+    "field": 1099511627689,
+    "scale": 1000000
+  },
+  "Random Guess": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 10.0,
+    "raw_acc_std": 0.0,
+    "macro_f1_mean": 0.1,
+    "macro_f1_std": 0.0,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Majority Class": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.03674853852005,
+    "raw_acc_std": 5.444436521039708,
+    "macro_f1_mean": 0.06285358227816745,
+    "macro_f1_std": 0.005224441372502013,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Label-Shuffle Control": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.03674853852005,
+    "raw_acc_std": 5.444436521039708,
+    "macro_f1_mean": 0.06285358227816745,
+    "macro_f1_std": 0.005224441372502013,
+    "macro_auroc_mean": 0.5215811945842531,
+    "macro_auroc_std": 0.03303866387573877
+  },
+  "CDR3 1-NN (Levenshtein)": {
+    "bal_acc_mean": 54.57352634846096,
+    "bal_acc_std": 2.6488817325788205,
+    "raw_acc_mean": 61.22954899762694,
+    "raw_acc_std": 3.3353205064177227,
+    "macro_f1_mean": 0.5003138261993504,
+    "macro_f1_std": 0.03990583324491335,
+    "macro_auroc_mean": 0.0,
+    "macro_auroc_std": 0.0
+  },
+  "3-mer + Logistic Regression": {
+    "bal_acc_mean": 41.21663045495871,
+    "bal_acc_std": 4.683075019373082,
+    "raw_acc_mean": 57.7605451929017,
+    "raw_acc_std": 4.872098693294063,
+    "macro_f1_mean": 0.4304882174909982,
+    "macro_f1_std": 0.05546194864070232,
+    "macro_auroc_mean": 0.8294244265835188,
+    "macro_auroc_std": 0.022352982536294048
+  },
+  "Centralized Reference": {
+    "bal_acc_mean": 42.21927790937262,
+    "bal_acc_std": 4.960859498744784,
+    "raw_acc_mean": 55.634894426899336,
+    "raw_acc_std": 5.104199008934151,
+    "macro_f1_mean": 0.4181302046697814,
+    "macro_f1_std": 0.047546951589191096,
+    "macro_auroc_mean": 0.8320367071478942,
+    "macro_auroc_std": 0.02256995406390351
+  },
+  "Local-Only (Mean 3 Hospitals)": {
+    "bal_acc_mean": 33.11635064623114,
+    "bal_acc_std": 3.331744719164134,
+    "raw_acc_mean": 46.875286576870074,
+    "raw_acc_std": 6.589678858543857,
+    "macro_f1_mean": 0.29094633840846973,
+    "macro_f1_std": 0.03905779190968925,
+    "macro_auroc_mean": 0.7543165545202679,
+    "macro_auroc_std": 0.027654936685295617
+  },
+  "Plain FedAvg + FastKAN": {
+    "bal_acc_mean": 39.346091118339345,
+    "bal_acc_std": 5.7938492926764384,
+    "raw_acc_mean": 56.395620339274025,
+    "raw_acc_std": 5.555416493505538,
+    "macro_f1_mean": 0.38418641031930656,
+    "macro_f1_std": 0.06446703582577212,
+    "macro_auroc_mean": 0.8170609451943461,
+    "macro_auroc_std": 0.030342709233997584
+  },
+  "Secured FedAvg + FastKAN": {
+    "bal_acc_mean": 39.32242352375538,
+    "bal_acc_std": 5.753964768117177,
+    "raw_acc_mean": 55.8992846832312,
+    "raw_acc_std": 5.575628066949847,
+    "macro_f1_mean": 0.37341584060826694,
+    "macro_f1_std": 0.05763437528989684,
+    "macro_auroc_mean": 0.8190762628665471,
+    "macro_auroc_std": 0.03298005126759025
+  },
+  "FedAvg + Local Fine-Tuning": {
+    "bal_acc_mean": 35.52620233360181,
+    "bal_acc_std": 5.084717880529061,
+    "raw_acc_mean": 49.305425000323744,
+    "raw_acc_std": 7.524159167812624,
+    "macro_f1_mean": 0.3291931167965815,
+    "macro_f1_std": 0.06402219796856437,
+    "macro_auroc_mean": 0.806273555785505,
+    "macro_auroc_std": 0.02666300857192992
+  },
+  "FedPer (Global Test)": {
+    "bal_acc_mean": 33.072285092540966,
+    "bal_acc_std": 6.859724247494373,
+    "raw_acc_mean": 49.80044643628078,
+    "raw_acc_std": 10.438320927911512,
+    "macro_f1_mean": 0.31109463914930024,
+    "macro_f1_std": 0.07175931083935914,
+    "macro_auroc_mean": 0.8020990143022481,
+    "macro_auroc_std": 0.03155739973360823
+  },
+  "Utility Delta (Plain - Secured)": {
+    "mean": 1.2611988887716474,
+    "std": 1.1829679606759915
+  },
+  "Max Weight Divergence": {
+    "mean": 0.06937330406597189,
+    "std": 0.017018421048666774
+  },
+  "One-Round Equivalence Delta": {
+    "mean": 2.4233644393412133e-07,
+    "std": 2.9969640006062474e-08
+  },
+  "FedAvg + Fine-Tuning (Local Matched Bal Acc)": {
+    "mean": 36.11642781382915,
+    "std": 5.97895871065066
+  },
+  "FedPer (Local Matched Bal Acc)": {
+    "mean": 34.39579666213661,
+    "std": 7.1291994661183296
+  },
+  "FedAvg (Local Matched Bal Acc)": {
+    "mean": 39.50111682795508,
+    "std": 5.570230285381371
+  },
+  "Stratified Acc (d=1, near)": {
+    "mean": 81.41508100321411,
+    "std": 10.000075758836102
+  },
+  "Stratified Acc (d=2)": {
+    "mean": 48.41256209777606,
+    "std": 5.260489729575844
+  },
+  "Stratified Acc (d>=3, distant)": {
+    "mean": 31.281225296104747,
+    "std": 4.7759712073020815
+  },
+  "Distance Stratification": {
+    "d1_acc_mean": 81.41508100321411,
+    "d1_acc_std": 10.000075758836102,
+    "d2_acc_mean": 48.41256209777606,
+    "d2_acc_std": 5.260489729575844,
+    "d3_acc_mean": 31.281225296104747,
+    "d3_acc_std": 4.7759712073020815,
+    "counts": {
+      "d1_count": 603,
+      "d2_count": 407,
+      "d3_count": 581,
+      "total_test": 1591
+    }
+  },
+  "Per-Class Recall": {
+    "GILGFVFTL": {
+      "mean": 76.04151572716351,
+      "std": 5.79891881754962
+    },
+    "NLVPMVATV": {
+      "mean": 41.03602859594728,
+      "std": 16.471669982190594
+    },
+    "GLCTLVAML": {
+      "mean": 54.77796117195974,
+      "std": 24.72288265964546
+    },
+    "STLPETAVVRR": {
+      "mean": 33.02462642220535,
+      "std": 10.598824385696503
+    },
+    "FLRGRAYGL": {
+      "mean": 62.526394016866945,
+      "std": 42.56317864693585
+    },
+    "RAKFKQLL": {
+      "mean": 9.833919577508123,
+      "std": 8.005037231983136
+    },
+    "KLLEIAPNC": {
+      "mean": 9.501645217694044,
+      "std": 8.637626333592252
+    },
+    "NQKLIANQF": {
+      "mean": 36.96049768906368,
+      "std": 19.965000060816173
+    },
+    "YLQPRTFLL": {
+      "mean": 59.1747475351831,
+      "std": 11.851205755569074
+    },
+    "KRWIILGLNK": {
+      "mean": 10.583575229801644,
+      "std": 22.049642046144495
+    }
+  },
+  "Statistical Significance": {
+    "plain_vs_local_gain_mean": 6.229740472108203,
+    "plain_vs_local_gain_std": 4.569617199317523,
+    "plain_vs_local_t_stat": 4.3111202239296595,
+    "plain_vs_local_p_val": 0.001958472526183382,
+    "secured_vs_local_gain_mean": 6.206072877524245,
+    "secured_vs_local_gain_std": 5.11049479028155,
+    "secured_vs_local_t_stat": 3.8402006896264935,
+    "secured_vs_local_p_val": 0.003965310266066499,
+    "seed_count": 10
+  },
+  "attrition": {
+    "raw": 284546,
+    "hs": 261261,
+    "trb": 149366,
+    "score_ge_1": 15814,
+    "valid": 15814,
+    "top10_raw": 10260,
+    "unambiguous": 9420,
+    "unique_clonotypes": 3864
+  }
+}

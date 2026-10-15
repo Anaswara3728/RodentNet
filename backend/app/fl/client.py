@@ -68,6 +68,9 @@ class RodentNetClient(BaseNumPyClient):
         fake_data: bool = False,
         task: str = "cifar",
         vdjdb_path: str | None = None,
+        shared_secrets: dict[str, bytes] | None = None,
+        private_key_bytes: bytes | None = None,
+        peer_public_keys: dict[str, bytes] | None = None,
     ) -> None:
         self.client_id = client_id
         self.identity = identity
@@ -75,6 +78,9 @@ class RodentNetClient(BaseNumPyClient):
         self.task = task
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.catalogue_tokens: torch.Tensor | None = None
+        self.shared_secrets = shared_secrets or {}
+        self.private_key_bytes = private_key_bytes
+        self.peer_public_keys = peer_public_keys or {}
 
         if task == "epitope":
             self.model = SiameseEpitopeKANNet().to(self.device)
@@ -144,6 +150,9 @@ class RodentNetClient(BaseNumPyClient):
             aggregator = MPCSecureAggregator(
                 field=int(config["mpc_field"]),
                 scale=int(config["mpc_scale"]),
+                shared_secrets=self.shared_secrets,
+                private_key_bytes=self.private_key_bytes,
+                peer_public_keys=self.peer_public_keys,
             )
             shared_parameters = aggregator.mask_weighted_update(
                 shared_parameters,

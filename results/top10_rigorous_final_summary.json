@@ -1,0 +1,168 @@
+{
+  "Random Guess": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 10.0,
+    "raw_acc_std": 0.0,
+    "macro_f1_mean": 0.1,
+    "macro_f1_std": 0.0,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Majority Class": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.08675514205259,
+    "raw_acc_std": 4.276023586127752,
+    "macro_f1_mean": 0.06298055321943359,
+    "macro_f1_std": 0.003912890738935464,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Label-Shuffle Control": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.08675514205259,
+    "raw_acc_std": 4.276023586127752,
+    "macro_f1_mean": 0.06298055321943359,
+    "macro_f1_std": 0.003912890738935464,
+    "macro_auroc_mean": 0.5049038337468288,
+    "macro_auroc_std": 0.031334452715549355
+  },
+  "CDR3 1-NN (Levenshtein)": {
+    "bal_acc_mean": 48.34439087443833,
+    "bal_acc_std": 7.124344256571111,
+    "raw_acc_mean": 54.15,
+    "raw_acc_std": 2.177154105707727,
+    "macro_f1_mean": 0.37255826858915486,
+    "macro_f1_std": 0.05837594594884583,
+    "macro_auroc_mean": 0.0,
+    "macro_auroc_std": 0.0
+  },
+  "3-mer + Logistic Regression": {
+    "bal_acc_mean": 43.09108253894395,
+    "bal_acc_std": 4.783048527952698,
+    "raw_acc_mean": 60.250298774713656,
+    "raw_acc_std": 3.328921562740881,
+    "macro_f1_mean": 0.4386070346419767,
+    "macro_f1_std": 0.06938279784806904,
+    "macro_auroc_mean": 0.8326450968523014,
+    "macro_auroc_std": 0.025066597211956063
+  },
+  "Centralized Reference": {
+    "bal_acc_mean": 42.70055718234617,
+    "bal_acc_std": 5.089399971036171,
+    "raw_acc_mean": 57.13110301673389,
+    "raw_acc_std": 3.112633288507997,
+    "macro_f1_mean": 0.41688205901518616,
+    "macro_f1_std": 0.048471912232606704,
+    "macro_auroc_mean": 0.8334250961452054,
+    "macro_auroc_std": 0.02585204507119394
+  },
+  "Local-Only (Mean 3 Hospitals)": {
+    "bal_acc_mean": 33.859653374187495,
+    "bal_acc_std": 3.562068041379466,
+    "raw_acc_mean": 46.092077200320794,
+    "raw_acc_std": 1.7035544901065092,
+    "macro_f1_mean": 0.28886074786179694,
+    "macro_f1_std": 0.03836997191218677,
+    "macro_auroc_mean": 0.7549626120452338,
+    "macro_auroc_std": 0.022849296819245975
+  },
+  "Plain FedAvg + FastKAN": {
+    "bal_acc_mean": 39.10076977846908,
+    "bal_acc_std": 4.628850134343369,
+    "raw_acc_mean": 52.333666256826916,
+    "raw_acc_std": 4.912064192649324,
+    "macro_f1_mean": 0.37884998457173535,
+    "macro_f1_std": 0.05986934637406421,
+    "macro_auroc_mean": 0.8231458199636734,
+    "macro_auroc_std": 0.027400625247680707
+  },
+  "Secured FedAvg + FastKAN": {
+    "bal_acc_mean": 39.98161700033991,
+    "bal_acc_std": 4.632005881400866,
+    "raw_acc_mean": 53.083395426922664,
+    "raw_acc_std": 6.1702913323949256,
+    "macro_f1_mean": 0.39135543447478716,
+    "macro_f1_std": 0.0653730827951904,
+    "macro_auroc_mean": 0.827629262763781,
+    "macro_auroc_std": 0.025528291439613614
+  },
+  "FedAvg + Local Fine-Tuning": {
+    "bal_acc_mean": 35.3434854727637,
+    "bal_acc_std": 1.869908256977092,
+    "raw_acc_mean": 50.15593971164252,
+    "raw_acc_std": 2.405996848264501,
+    "macro_f1_mean": 0.3396718190114042,
+    "macro_f1_std": 0.017639782309065946,
+    "macro_auroc_mean": 0.8110551140548552,
+    "macro_auroc_std": 0.023547967834532033
+  },
+  "FedPer (Global Test)": {
+    "bal_acc_mean": 38.26056997391919,
+    "bal_acc_std": 5.750330773717265,
+    "raw_acc_mean": 52.05771842374425,
+    "raw_acc_std": 6.149630824268299,
+    "macro_f1_mean": 0.36320791515703926,
+    "macro_f1_std": 0.06387970710027716,
+    "macro_auroc_mean": 0.8041404667085317,
+    "macro_auroc_std": 0.027788347885822743
+  },
+  "Utility Delta (Plain - Secured)": {
+    "mean": 1.4927581217552586,
+    "std": 1.446230698946557
+  },
+  "Max Weight Divergence": {
+    "mean": 0.08473981112132686,
+    "std": 0.015520569300868599
+  },
+  "FedAvg + Fine-Tuning (Local Matched Bal Acc)": {
+    "mean": 36.77889794259121,
+    "std": 3.2289439838100757
+  },
+  "FedPer (Local Matched Bal Acc)": {
+    "mean": 38.759066365382566,
+    "std": 4.750169332450168
+  },
+  "FedAvg (Local Matched Bal Acc)": {
+    "mean": 36.83138637427675,
+    "std": 5.26904558471763
+  },
+  "Stratified Acc (d=1, near)": {
+    "mean": 33.992642180479,
+    "std": 9.495515484666877
+  },
+  "Stratified Acc (d=2)": {
+    "mean": 39.16938928088364,
+    "std": 5.914219898926339
+  },
+  "Stratified Acc (d>=3, distant)": {
+    "mean": 28.01107654144414,
+    "std": 1.2404508349022418
+  },
+  "attrition": {
+    "raw": 284546,
+    "hs": 261261,
+    "trb": 149366,
+    "score_ge_1": 15814,
+    "valid": 15814,
+    "top10_raw": 10260,
+    "unambiguous": 9420,
+    "unique_clonotypes": 3864
+  },
+  "metadata": {
+    "git_commit": "be52ed8",
+    "timestamp": "2026-10-13 19:14:19 UTC",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "epochs": 10,
+    "field": 1099511627689,
+    "scale": 1000000
+  }
+}

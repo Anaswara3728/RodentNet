@@ -25,6 +25,29 @@ class SignatureProvider(Protocol):
         ...
 
 
+class DilithiumPyProvider:
+    """Genuine NIST ML-DSA-65 / Dilithium3 provider using dilithium-py."""
+
+    algorithm = "ML-DSA-65"
+
+    def __init__(self) -> None:
+        from dilithium_py.dilithium import Dilithium3
+        self._dilithium = Dilithium3
+
+    def generate_keypair(self) -> tuple[bytes, bytes]:
+        pk, sk = self._dilithium.keygen()
+        return bytes(pk), bytes(sk)
+
+    def sign(self, message: bytes, secret_key: bytes) -> bytes:
+        return bytes(self._dilithium.sign(secret_key, message))
+
+    def verify(self, message: bytes, signature: bytes, public_key: bytes) -> bool:
+        try:
+            return bool(self._dilithium.verify(public_key, message, signature))
+        except Exception:
+            return False
+
+
 class PqcryptoMLDSA65Provider:
     """Adapter for pqcrypto ML-DSA-65 or its Dilithium3 predecessor name."""
 
@@ -60,7 +83,7 @@ class DevMLDSA65Provider:
     """Deterministic local-only stand-in for development machines without PQC bindings.
 
     This class keeps the handshake and threshold reconstruction path runnable in CI and on
-    laptops. Deployments should install `pqcrypto` and use `PqcryptoMLDSA65Provider`.
+    laptops. Deployments should install `dilithium-py` or `pqcrypto` to use genuine ML-DSA-65.
     """
 
     algorithm = "ML-DSA-65-DEV-HMAC"
@@ -79,11 +102,18 @@ class DevMLDSA65Provider:
 
 def load_signature_provider(*, allow_dev_fallback: bool = True) -> SignatureProvider:
     try:
+        return DilithiumPyProvider()
+    except Exception:
+        pass
+
+    try:
         return PqcryptoMLDSA65Provider()
     except Exception:
-        if not allow_dev_fallback:
-            raise
-        return DevMLDSA65Provider()
+        pass
+
+    if not allow_dev_fallback:
+        raise RuntimeError("No genuine PQC signature provider available and dev fallback disallowed")
+    return DevMLDSA65Provider()
 
 
 def b64encode(value: bytes) -> str:

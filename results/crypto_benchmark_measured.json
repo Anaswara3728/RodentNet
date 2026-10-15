@@ -1,0 +1,22 @@
+{
+  "classical": {
+    "x25519_pk_bytes": 32,
+    "x25519_secret_bytes": 32,
+    "x25519_exchange_ms": 0.03294000402092934,
+    "ed25519_pk_bytes": 32,
+    "ed25519_sig_bytes": 64,
+    "ed25519_sign_ms": 0.03113602753728628,
+    "ed25519_verify_ms": 0.08961602114140987
+  },
+  "post_quantum": {
+    "ml_kem_768_pk_bytes": 1184,
+    "ml_kem_768_ct_bytes": 1088,
+    "ml_kem_768_secret_bytes": 32,
+    "ml_kem_768_encaps_ms": 3.92692597117275,
+    "ml_kem_768_decaps_ms": 5.432291007600725,
+    "ml_dsa_65_pk_bytes": 1952,
+    "ml_dsa_65_sig_bytes": 3293,
+    "ml_dsa_65_sign_ms": 51.8279750039801,
+    "ml_dsa_65_verify_ms": 11.224082983098924
+  }
+}

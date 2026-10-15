@@ -1,0 +1,5 @@
+Algorithm,Type,Quantum-Safe,KeyGen (ms),Sign/Encaps (ms),Verify/Decaps (ms),Public Key (bytes),Signature/CT (bytes)
+RSA-2048,Signature,No,37.554,0.593,0.029,294,256
+ECDSA P-256,Signature,No,0.074,0.262,0.061,91,70
+ML-DSA-65 (Dilithium3),Signature,Yes,9.669,102.6,10.772,1952,3293
+ML-KEM-768 (Kyber768),Key Exchange,Yes,3.287,4.168,5.674,1184,1088

@@ -1,0 +1,112 @@
+{
+  "Random Guess (1/10)": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 10.0,
+    "raw_acc_std": 0.0,
+    "macro_f1_mean": 0.1,
+    "macro_f1_std": 0.0,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Majority Class": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.08675514205259,
+    "raw_acc_std": 4.276023586127752,
+    "macro_f1_mean": 0.06298055321943359,
+    "macro_f1_std": 0.003912890738935464,
+    "macro_auroc_mean": 0.5,
+    "macro_auroc_std": 0.0
+  },
+  "Label-Shuffle Control": {
+    "bal_acc_mean": 10.0,
+    "bal_acc_std": 0.0,
+    "raw_acc_mean": 46.08675514205259,
+    "raw_acc_std": 4.276023586127752,
+    "macro_f1_mean": 0.06298055321943359,
+    "macro_f1_std": 0.003912890738935464,
+    "macro_auroc_mean": 0.5049038337468288,
+    "macro_auroc_std": 0.031334452715549355
+  },
+  "CDR3 1-NN (Levenshtein)": {
+    "bal_acc_mean": 45.96988638504354,
+    "bal_acc_std": 5.848031187363781,
+    "raw_acc_mean": 53.84000000000001,
+    "raw_acc_std": 2.431131423843638,
+    "macro_f1_mean": 0.3668029223231441,
+    "macro_f1_std": 0.05625893280416152,
+    "macro_auroc_mean": null,
+    "macro_auroc_std": null
+  },
+  "3-mer + Logistic Regression": {
+    "bal_acc_mean": 43.09108253894395,
+    "bal_acc_std": 4.783048527952698,
+    "raw_acc_mean": 60.250298774713656,
+    "raw_acc_std": 3.328921562740881,
+    "macro_f1_mean": 0.4386070346419767,
+    "macro_f1_std": 0.06938279784806904,
+    "macro_auroc_mean": 0.8326450968523014,
+    "macro_auroc_std": 0.025066597211956063
+  },
+  "Centralized FastKAN": {
+    "bal_acc_mean": 42.70055718234617,
+    "bal_acc_std": 5.089399971036171,
+    "raw_acc_mean": 57.13110301673389,
+    "raw_acc_std": 3.112633288507997,
+    "macro_f1_mean": 0.41688205901518616,
+    "macro_f1_std": 0.048471912232606704,
+    "macro_auroc_mean": 0.8334250961452054,
+    "macro_auroc_std": 0.02585204507119394
+  },
+  "Local-Only (Hospital 0)": {
+    "bal_acc_mean": 32.568288909440085,
+    "bal_acc_std": 8.386215212929281,
+    "raw_acc_mean": 45.75419985852497,
+    "raw_acc_std": 7.645343299714787,
+    "macro_f1_mean": 0.2748042393059624,
+    "macro_f1_std": 0.06043938941505175,
+    "macro_auroc_mean": 0.7628786712510636,
+    "macro_auroc_std": 0.027719497987726768
+  },
+  "FedAvg + FastKAN": {
+    "bal_acc_mean": 43.17510728639824,
+    "bal_acc_std": 6.08921196820963,
+    "raw_acc_mean": 58.099244669375615,
+    "raw_acc_std": 2.0354939096744444,
+    "macro_f1_mean": 0.41015038796499514,
+    "macro_f1_std": 0.06030635452271037,
+    "macro_auroc_mean": 0.8392998682682041,
+    "macro_auroc_std": 0.026783447122834453
+  },
+  "FedAvg + Fine-Tuning": {
+    "bal_acc_mean": 36.59833545804112,
+    "bal_acc_std": 4.854418252450813,
+    "raw_acc_mean": 50.306939646006754,
+    "raw_acc_std": 5.591664966877181,
+    "macro_f1_mean": 0.3417226130688597,
+    "macro_f1_std": 0.04842482213999739,
+    "macro_auroc_mean": 0.8126005339498474,
+    "macro_auroc_std": 0.020451114479935053
+  },
+  "FedPer (Global Test)": {
+    "bal_acc_mean": 36.4875167439898,
+    "bal_acc_std": 4.108774279721166,
+    "raw_acc_mean": 52.080466659748026,
+    "raw_acc_std": 5.244541187329743,
+    "macro_f1_mean": 0.35063154846619426,
+    "macro_f1_std": 0.07060732965112847,
+    "macro_auroc_mean": 0.8097758020854935,
+    "macro_auroc_std": 0.021540364278557933
+  },
+  "FedPer (Local Test Matched)": {
+    "bal_acc_mean": 37.15840114772749,
+    "bal_acc_std": 2.068036917380168,
+    "raw_acc_mean": 50.2895711634076,
+    "raw_acc_std": 7.075609567956936,
+    "macro_f1_mean": 0.3149693938488806,
+    "macro_f1_std": 0.031496132111219384,
+    "macro_auroc_mean": 0.6551744706900371,
+    "macro_auroc_std": 0.04828125197174885
+  }
+}

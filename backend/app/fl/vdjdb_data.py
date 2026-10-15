@@ -146,6 +146,7 @@ def load_vdjdb_partition(num_clients: int, client_id: int, tsv_path: str = None,
     """
     Returns non-IID partitioned train/eval DataLoaders.
     Partitioning is done by Epitope groups so clients hold different label distributions.
+    Implements a strict TCR (CDR3) split to prevent data leakage between train and test.
     """
     dataset = VDJdbDataset(tsv_path=tsv_path, synthetic=synthetic)
     
@@ -170,22 +171,28 @@ def load_vdjdb_partition(num_clients: int, client_id: int, tsv_path: str = None,
     if not client_indices:
         client_indices = list(range(len(dataset)))
         
-    # 80/20 train/test split for this client's local data
-    np.random.seed(42 + client_id)
-    np.random.shuffle(client_indices)
-    split_idx = int(0.8 * len(client_indices))
+    # Implement Strict TCR Split (Prevent Leakage)
+    client_data = dataset.data.iloc[client_indices]
+    unique_tcrs = client_data['CDR3'].unique()
     
-    train_idx = client_indices[:split_idx]
-    test_idx = client_indices[split_idx:]
+    np.random.seed(42 + client_id)
+    np.random.shuffle(unique_tcrs)
+    split_idx = int(0.8 * len(unique_tcrs))
+    
+    train_tcrs = set(unique_tcrs[:split_idx])
+    test_tcrs = set(unique_tcrs[split_idx:])
+    
+    train_idx = [i for i in client_indices if dataset.data.iloc[i]['CDR3'] in train_tcrs]
+    test_idx = [i for i in client_indices if dataset.data.iloc[i]['CDR3'] in test_tcrs]
     
     train_subset = Subset(dataset, train_idx)
     test_subset = Subset(dataset, test_idx)
     
     # Use Episodic sampling for training to handle class imbalance
-    # 4 ways * 8 shots = 32 batch size
-    train_sampler = EpisodicBatchSampler(train_subset, n_ways=4, k_shots=8)
+    # 16 ways * 16 shots = 256 batch size (Needed for real InfoNCE contrastive learning)
+    train_sampler = EpisodicBatchSampler(train_subset, n_ways=16, k_shots=16)
     train_loader = DataLoader(train_subset, batch_sampler=train_sampler)
-    test_loader = DataLoader(test_subset, batch_size=32, shuffle=False)
+    test_loader = DataLoader(test_subset, batch_size=256, shuffle=False)
     
     # We also return the catalogue of all unique epitope tokens (needed for evaluation against unseen/all epitopes)
     all_epi_tokens = torch.stack([dataset.epi_tokenizer.encode(epi) for epi in dataset.unique_epitopes])

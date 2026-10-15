@@ -45,7 +45,8 @@ def run_experiment(tsv_path: str, epochs: int, out_suffix: str):
           "--epochs 1 dry run first to check timing before committing to a full run.")
 
     for epoch in range(1, epochs + 1):
-        loss = train_one_epoch(model, train_loader, device=device, lr=2e-3)
+        # Lower learning rate (5e-4) for larger batch sizes and stable real-world learning
+        loss = train_one_epoch(model, train_loader, device=device, lr=5e-4)
         _, metrics = evaluate_model(model, test_loader, catalogue_tokens, device=device)
 
         results["Epoch"].append(epoch)

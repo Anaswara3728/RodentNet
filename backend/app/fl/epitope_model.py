@@ -84,21 +84,41 @@ class ResidueMotifEncoder(nn.Module):
         x = self.pool(x).squeeze(-1) # (B, channels)
         return x
 
-class PersonalCalibration(nn.Module):
-    """Learnable temperature scalar (local per-client)."""
-    def __init__(self):
+class LocalEpitopeHead(nn.Module):
+    """Local hospital-specific calibration head.
+    Learns hospital-specific epitope prevalence biases (b_k in R^{num_epitopes})
+    to adapt candidate retrieval ranking to local patient demographics.
+    Kept strictly local per hospital (never federated).
+    """
+    def __init__(self, num_epitopes: int = 485):
         super().__init__()
-        self.log_temperature = nn.Parameter(torch.zeros(1))
+        self.num_epitopes = num_epitopes
+        self.bias = nn.Parameter(torch.zeros(num_epitopes))
         
-    def forward(self, logits):
-        temp = torch.exp(self.log_temperature).clamp(min=0.01, max=100.0)
-        return logits / temp
+    def forward(self, logits, epi_ids=None):
+        if epi_ids is not None:
+            # During batch training: logits shape is (B_tcr, B_epi)
+            # Add bias for each candidate epitope present in the batch
+            clamped_ids = epi_ids.clamp(max=self.num_epitopes - 1)
+            return logits + self.bias[clamped_ids].unsqueeze(0)
+        else:
+            # During evaluation: logits shape is (B, num_epitopes)
+            if logits.size(1) == self.bias.size(0):
+                return logits + self.bias
+            elif logits.size(1) < self.bias.size(0):
+                return logits + self.bias[:logits.size(1)]
+            else:
+                return logits
+
+# Backwards compatibility alias
+PersonalCalibration = LocalEpitopeHead
 
 class SiameseEpitopeKANNet(nn.Module):
-    def __init__(self, vocab_size=25, embed_dim=64, conv_channels=128, proj_dim=64):
+    """Two-Tower Residue-Motif FastKAN Network for TCR-Epitope Interaction Prediction."""
+    def __init__(self, vocab_size=25, embed_dim=64, conv_channels=128, proj_dim=64, num_epitopes=485):
         super().__init__()
         
-        # SHARED — federated (Matches existing SHARED_PREFIXES = "features.", "projection.")
+        # SHARED — federated across hospitals
         self.features = nn.ModuleDict({
             'tcr': ResidueMotifEncoder(vocab_size, embed_dim, conv_channels),
             'epitope': ResidueMotifEncoder(vocab_size, embed_dim, conv_channels)
@@ -115,11 +135,11 @@ class SiameseEpitopeKANNet(nn.Module):
                 nn.ReLU(),
                 nn.Linear(proj_dim, proj_dim)
             ),
-            'kan': FastKAN(proj_dim * 2, proj_dim, 1) # Takes concatenated (TCR, Epi) -> Score
+            'kan': FastKAN(proj_dim * 2, proj_dim, 1) # Shared non-linear KAN metric
         })
         
-        # LOCAL — never federated
-        self.personal_head = PersonalCalibration()
+        # LOCAL — private per hospital (never federated)
+        self.personal_head = LocalEpitopeHead(num_epitopes=num_epitopes)
         
     def encode_tcr(self, tokens):
         feat = self.features['tcr'](tokens)
@@ -132,58 +152,61 @@ class SiameseEpitopeKANNet(nn.Module):
         return F.normalize(proj, p=2, dim=1)
         
     def score(self, tcr_emb, epi_emb):
-        # Concatenate for FastKAN
         x = torch.cat([tcr_emb, epi_emb], dim=-1)
         raw_score = self.projection['kan'](x).squeeze(-1)
-        return self.personal_head(raw_score)
+        return raw_score
         
-    def pairwise_logits(self, tcr_batch, epi_batch):
-        """Computes BxB interaction matrix."""
+    def pairwise_logits(self, tcr_batch, epi_batch, epi_ids=None):
+        """Computes BxB interaction matrix with local epitope bias applied."""
         B_tcr = tcr_batch.size(0)
         B_epi = epi_batch.size(0)
         
-        # Expand for pairwise matching
         tcr_exp = tcr_batch.unsqueeze(1).expand(B_tcr, B_epi, -1).reshape(-1, tcr_batch.size(1))
         epi_exp = epi_batch.unsqueeze(0).expand(B_tcr, B_epi, -1).reshape(-1, epi_batch.size(1))
         
         scores = self.score(tcr_exp, epi_exp)
-        return scores.view(B_tcr, B_epi)
+        logits = scores.view(B_tcr, B_epi)
+        return self.personal_head(logits, epi_ids=epi_ids)
 
     def forward(self, tcr_tokens, epitope_tokens):
         tcr_emb = self.encode_tcr(tcr_tokens)
         epi_emb = self.encode_epitope(epitope_tokens)
         return self.score(tcr_emb, epi_emb)
 
-def info_nce_loss(logits):
-    """Symmetric InfoNCE over the BxB pairwise-logit matrix."""
+def info_nce_loss(logits, epi_ids=None):
+    """Supervised InfoNCE loss over pairwise interaction logits.
+    Masks out false negatives (other samples in the batch possessing identical epitopes).
+    """
     B = logits.size(0)
+    if epi_ids is not None and epi_ids.size(0) == B:
+        same_epi = (epi_ids.unsqueeze(1) == epi_ids.unsqueeze(0))
+        diag = torch.eye(B, dtype=torch.bool, device=logits.device)
+        false_negatives = same_epi & (~diag)
+        logits = logits.masked_fill(false_negatives, -1e9)
+        
     targets = torch.arange(B, device=logits.device)
-    
     loss_tcr_epi = F.cross_entropy(logits, targets)
     loss_epi_tcr = F.cross_entropy(logits.t(), targets)
-    
     return (loss_tcr_epi + loss_epi_tcr) / 2.0
 
-def train_one_epoch(model, loader, device, lr=1e-3):
+def train_one_epoch(model, loader, device, lr=1e-3, optimizer=None):
     model.train()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    if optimizer is None:
+        optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     
     total_loss = 0
-    for tcr_batch, epi_batch, _ in loader:
+    for tcr_batch, epi_batch, epi_ids in loader:
         tcr_batch = tcr_batch.to(device)
         epi_batch = epi_batch.to(device)
+        epi_ids = epi_ids.to(device)
         
         optimizer.zero_grad()
-        
         tcr_emb = model.encode_tcr(tcr_batch)
         epi_emb = model.encode_epitope(epi_batch)
-        
-        logits = model.pairwise_logits(tcr_emb, epi_emb)
-        
-        loss = info_nce_loss(logits)
+        logits = model.pairwise_logits(tcr_emb, epi_emb, epi_ids=epi_ids)
+        loss = info_nce_loss(logits, epi_ids=epi_ids)
         loss.backward()
         optimizer.step()
-        
         total_loss += loss.item()
         
     return total_loss / max(len(loader), 1)

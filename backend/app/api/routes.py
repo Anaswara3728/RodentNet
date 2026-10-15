@@ -104,6 +104,12 @@ def enroll_client(request: EnrollClientRequest) -> dict[str, object]:
 
 @router.post("/dev/identity")
 def create_dev_identity(request: DevIdentityRequest) -> dict[str, object]:
+    """DEV SIMULATION HELPER ONLY.
+    
+    WARNING: In production federated deployment, hospital clients generate their own
+    Dilithium3 keypairs strictly on-premise and enroll solely via POST /clients/enroll.
+    This route exists solely for single-host browser UI demonstrations.
+    """
     if request.shares < request.threshold:
         raise HTTPException(status_code=400, detail="shares must be greater than or equal to threshold")
 
@@ -166,6 +172,13 @@ def verify_handshake(request: VerifyHandshakeRequest) -> dict[str, object]:
 
 @router.post("/dev/sign")
 def dev_sign(request: DevSignRequest) -> dict[str, object]:
+    """DEV SIMULATION HELPER ONLY.
+    
+    WARNING: In production federated deployment, hospital clients execute threshold
+    reconstruction and Dilithium3 signing strictly on-device. The central aggregation
+    server never receives shares or private keys. This route exists solely for
+    single-host browser UI demonstrations.
+    """
     try:
         transcript = HandshakeTranscript.from_json(dict(request.transcript))
         shares = [SecretShare.from_json(share) for share in request.shares[: request.threshold]]

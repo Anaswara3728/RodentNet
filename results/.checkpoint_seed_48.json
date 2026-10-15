@@ -1,0 +1,95 @@
+{
+  "Random Guess": {
+    "bal_acc": 10.0,
+    "raw_acc": 10.0,
+    "macro_f1": 0.1,
+    "macro_auroc": 0.5
+  },
+  "Majority Class": {
+    "bal_acc": 10.0,
+    "raw_acc": 43.03104077906269,
+    "macro_f1": 0.060170212765957444,
+    "macro_auroc": 0.5
+  },
+  "Label-Shuffle Control": {
+    "bal_acc": 10.0,
+    "raw_acc": 43.03104077906269,
+    "macro_f1": 0.060170212765957444,
+    "macro_auroc": 0.5420211923448854
+  },
+  "CDR3 1-NN (Levenshtein)": {
+    "bal_acc": 55.91825618145735,
+    "raw_acc": 58.06451612903226,
+    "macro_f1": 0.5218248977366389,
+    "macro_auroc": 0.0
+  },
+  "3-mer + Logistic Regression": {
+    "bal_acc": 45.288036359288185,
+    "raw_acc": 56.11685940353013,
+    "macro_f1": 0.4744186340806432,
+    "macro_auroc": 0.8300951350598744
+  },
+  "Centralized Reference": {
+    "bal_acc": 50.50690717351405,
+    "raw_acc": 53.74315276932441,
+    "macro_f1": 0.5026882708581524,
+    "macro_auroc": 0.8501009789109808
+  },
+  "Local-Only (Mean 3 Hospitals)": {
+    "bal_acc": 33.23434928370181,
+    "raw_acc": 51.28829377155609,
+    "macro_f1": 0.3142628322930492,
+    "macro_auroc": 0.774556890125055
+  },
+  "Plain FedAvg + FastKAN": {
+    "bal_acc": 45.62465928991505,
+    "raw_acc": 60.55995130858186,
+    "macro_f1": 0.46666573207366097,
+    "macro_auroc": 0.8498621739905114
+  },
+  "Secured FedAvg + FastKAN": {
+    "bal_acc": 46.57553358270047,
+    "raw_acc": 61.04686548995739,
+    "macro_f1": 0.4786189821539624,
+    "macro_auroc": 0.8542333321048515
+  },
+  "Utility Delta (Plain - Secured)": 0.9508742927854215,
+  "Max Weight Divergence": 0.04107464212353732,
+  "One-Round Equivalence Delta": 2.119814586087898e-07,
+  "FedAvg + Local Fine-Tuning": {
+    "bal_acc": 41.27793985298441,
+    "raw_acc": 56.17772367620207,
+    "macro_f1": 0.4117329442075473,
+    "macro_auroc": 0.8373229963226095
+  },
+  "FedAvg + Fine-Tuning (Local Matched Bal Acc)": 36.44772606244606,
+  "FedPer (Global Test)": {
+    "bal_acc": 33.39176507609658,
+    "raw_acc": 52.09981740718198,
+    "macro_f1": 0.3406857585342455,
+    "macro_auroc": 0.799919235291232
+  },
+  "FedPer (Local Matched Bal Acc)": 38.3893929570008,
+  "FedAvg (Local Matched Bal Acc)": 42.1964375778118,
+  "Stratified Acc (d=1, near)": 82.72727272727273,
+  "Stratified Acc (d=2)": 54.52196382428941,
+  "Stratified Acc (d>=3, distant)": 39.93288590604027,
+  "Stratified Counts": {
+    "d1_count": 660,
+    "d2_count": 387,
+    "d3_count": 596,
+    "total_test": 1643
+  },
+  "Per-Class Recall": {
+    "GILGFVFTL": 78.50070721357851,
+    "NLVPMVATV": 59.00783289817232,
+    "GLCTLVAML": 50.54945054945055,
+    "STLPETAVVRR": 22.485207100591715,
+    "FLRGRAYGL": 94.33962264150944,
+    "RAKFKQLL": 3.7735849056603774,
+    "KLLEIAPNC": 11.428571428571429,
+    "NQKLIANQF": 60.60606060606061,
+    "YLQPRTFLL": 75.55555555555556,
+    "KRWIILGLNK": 0.0
+  }
+}
