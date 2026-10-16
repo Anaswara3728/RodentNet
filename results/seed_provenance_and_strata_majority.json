@@ -1,0 +1,253 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "stratum_majority_baselines": {
+    "d1_mean": 62.26186624941526,
+    "d1_std": 11.663145566420805,
+    "d2_mean": 46.975098578399475,
+    "d2_std": 3.1211337122144682,
+    "d3_mean": 36.21506324278598,
+    "d3_std": 1.8322503071755867
+  },
+  "stratum_counts_mean": {
+    "total_mean": 1755.8,
+    "d1_count_mean": 750.2,
+    "d1_share_pct": 42.72696206857273,
+    "d2_count_mean": 402.2,
+    "d2_share_pct": 22.90693700877093,
+    "d3_count_mean": 603.4,
+    "d3_share_pct": 34.36610092265634
+  },
+  "per_seed_provenance": [
+    {
+      "seed": 42,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "37e55e943d4e6371",
+      "test_hash": "148410e143168352",
+      "model_init_hash": "1648278d14520d2a",
+      "stratum_counts": {
+        "d1": 603,
+        "d2": 407,
+        "d3": 581,
+        "total": 1591
+      },
+      "stratum_majority_acc": {
+        "d1": 58.374792703150916,
+        "d1_top": "GILGFVFTL",
+        "d2": 51.35135135135135,
+        "d2_top": "GILGFVFTL",
+        "d3": 34.251290877796905,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 43,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "b2eb7f56ae0ac431",
+      "test_hash": "3359f5b4d71481d4",
+      "model_init_hash": "64cc4a493e120cda",
+      "stratum_counts": {
+        "d1": 595,
+        "d2": 367,
+        "d3": 608,
+        "total": 1570
+      },
+      "stratum_majority_acc": {
+        "d1": 64.87394957983193,
+        "d1_top": "GILGFVFTL",
+        "d2": 49.59128065395095,
+        "d2_top": "GILGFVFTL",
+        "d3": 37.5,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 44,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "2b3bc6736a755a8d",
+      "test_hash": "f70fea02c797d6b6",
+      "model_init_hash": "51beb15d58f6daa8",
+      "stratum_counts": {
+        "d1": 835,
+        "d2": 376,
+        "d3": 595,
+        "total": 1806
+      },
+      "stratum_majority_acc": {
+        "d1": 53.65269461077844,
+        "d1_top": "GILGFVFTL",
+        "d2": 44.148936170212764,
+        "d2_top": "GILGFVFTL",
+        "d3": 34.621848739495796,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 45,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "c0ca1d856cd6abc0",
+      "test_hash": "4392aa2d35d245de",
+      "model_init_hash": "b92083748dd6e9e6",
+      "stratum_counts": {
+        "d1": 744,
+        "d2": 462,
+        "d3": 565,
+        "total": 1771
+      },
+      "stratum_majority_acc": {
+        "d1": 78.09139784946237,
+        "d1_top": "GILGFVFTL",
+        "d2": 47.61904761904761,
+        "d2_top": "GILGFVFTL",
+        "d3": 34.51327433628318,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 46,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "8ce4c58e9a713c34",
+      "test_hash": "1c8fbc3e7f2b6dc0",
+      "model_init_hash": "6b7706405af4fdbd",
+      "stratum_counts": {
+        "d1": 1015,
+        "d2": 425,
+        "d3": 609,
+        "total": 2049
+      },
+      "stratum_majority_acc": {
+        "d1": 49.064039408866996,
+        "d1_top": "GILGFVFTL",
+        "d2": 44.94117647058823,
+        "d2_top": "GILGFVFTL",
+        "d3": 40.229885057471265,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 47,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "dc5cabc90a0d416d",
+      "test_hash": "cba048889bfe0823",
+      "model_init_hash": "14ea3307f8b32439",
+      "stratum_counts": {
+        "d1": 1018,
+        "d2": 401,
+        "d3": 642,
+        "total": 2061
+      },
+      "stratum_majority_acc": {
+        "d1": 43.614931237721024,
+        "d1_top": "FLRGRAYGL",
+        "d2": 43.14214463840399,
+        "d2_top": "GILGFVFTL",
+        "d3": 36.60436137071651,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 48,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "fc939fcc85b1c071",
+      "test_hash": "78ce38b01bfdf4ca",
+      "model_init_hash": "a2873f2a788945bc",
+      "stratum_counts": {
+        "d1": 660,
+        "d2": 387,
+        "d3": 596,
+        "total": 1643
+      },
+      "stratum_majority_acc": {
+        "d1": 53.333333333333336,
+        "d1_top": "GILGFVFTL",
+        "d2": 52.19638242894057,
+        "d2_top": "GILGFVFTL",
+        "d3": 37.58389261744966,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 49,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "e07abd877727463e",
+      "test_hash": "e52b14985b1e1171",
+      "model_init_hash": "9e0105bb8b67a1e3",
+      "stratum_counts": {
+        "d1": 596,
+        "d2": 415,
+        "d3": 598,
+        "total": 1609
+      },
+      "stratum_majority_acc": {
+        "d1": 71.97986577181209,
+        "d1_top": "GILGFVFTL",
+        "d2": 42.89156626506024,
+        "d2_top": "GILGFVFTL",
+        "d3": 34.11371237458194,
+        "d3_top": "GILGFVFTL"
+      }
+    },
+    {
+      "seed": 50,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "071ae985db329716",
+      "test_hash": "2e6829d6ea398a86",
+      "model_init_hash": "50258c900c5d422d",
+      "stratum_counts": {
+        "d1": 747,
+        "d2": 395,
+        "d3": 647,
+        "total": 1789
+      },
+      "stratum_majority_acc": {
+        "d1": 75.90361445783132,
+        "d1_top": "GILGFVFTL",
+        "d2": 46.58227848101266,
+        "d2_top": "GILGFVFTL",
+        "d3": 36.476043276661514,
+        "d3_top": "NLVPMVATV"
+      }
+    },
+    {
+      "seed": 51,
+      "train_cdr3_count": 3091,
+      "test_cdr3_count": 773,
+      "train_hash": "055907cd4087760b",
+      "test_hash": "4ae390c864dd8aae",
+      "model_init_hash": "5617f45fdd14b94d",
+      "stratum_counts": {
+        "d1": 689,
+        "d2": 387,
+        "d3": 593,
+        "total": 1669
+      },
+      "stratum_majority_acc": {
+        "d1": 73.7300435413643,
+        "d1_top": "GILGFVFTL",
+        "d2": 47.286821705426355,
+        "d2_top": "GILGFVFTL",
+        "d3": 36.25632377740304,
+        "d3_top": "NLVPMVATV"
+      }
+    }
+  ]
+}
