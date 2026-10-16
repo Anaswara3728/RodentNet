@@ -107,9 +107,9 @@ def generate_table_strata():
     
     print(f"{'Stratum':<18} | {'Share (%)':<10} | {'Test Count':<16} | {'Model Acc (%)':<20} | {'Oracle Majority (%)':<22} | {'Paired Delta':<18} | {'t-stat':<8} | {'p-val':<8}")
     print("-" * 128)
-    print(f"{'d = 1 (Near)':<18} | {counts['d1_share_pct']:<10.1f} | {counts['d1_count_mean']:<16.1f} | {np.mean(d1_accs):.2f} +/- {np.std(d1_accs):.2f}%    | {np.mean(d1_oracles):.2f} +/- {np.std(d1_oracles):.2f}%       | {np.mean(d1_accs - d1_oracles):+.2f} +/- {np.std(d1_accs - d1_oracles):.2f} pp | {t1:<8.2f} | {p1:<8.4f}")
-    print(f"{'d = 2 (Interm)':<18} | {counts['d2_share_pct']:<10.1f} | {counts['d2_count_mean']:<16.1f} | {np.mean(d2_accs):.2f} +/- {np.std(d2_accs):.2f}%    | {np.mean(d2_oracles):.2f} +/- {np.std(d2_oracles):.2f}%       | {np.mean(d2_accs - d2_oracles):+.2f} +/- {np.std(d2_accs - d2_oracles):.2f} pp | {t2:<8.2f} | {p2:<8.4f}")
-    print(f"{'d >= 3 (Distant)':<18} | {counts['d3_share_pct']:<10.1f} | {counts['d3_count_mean']:<16.1f} | {np.mean(d3_accs):.2f} +/- {np.std(d3_accs):.2f}%    | {np.mean(d3_oracles):.2f} +/- {np.std(d3_oracles):.2f}%       | {np.mean(d3_accs - d3_oracles):+.2f} +/- {np.std(d3_accs - d3_oracles):.2f} pp | {t3:<8.2f} | {p3:<8.4f}")
+    print(f"{'d = 1 (Near)':<18} | {counts['d1_share_pct']:<10.1f} | {counts['d1_count_mean']:<16.1f} | {np.mean(d1_accs):.2f} +/- {np.std(d1_accs, ddof=1):.2f}%    | {np.mean(d1_oracles):.2f} +/- {np.std(d1_oracles, ddof=1):.2f}%       | {np.mean(d1_accs - d1_oracles):+.2f} +/- {np.std(d1_accs - d1_oracles, ddof=1):.2f} pp | {t1:<8.2f} | {p1:<8.4f}")
+    print(f"{'d = 2 (Interm)':<18} | {counts['d2_share_pct']:<10.1f} | {counts['d2_count_mean']:<16.1f} | {np.mean(d2_accs):.2f} +/- {np.std(d2_accs, ddof=1):.2f}%    | {np.mean(d2_oracles):.2f} +/- {np.std(d2_oracles, ddof=1):.2f}%       | {np.mean(d2_accs - d2_oracles):+.2f} +/- {np.std(d2_accs - d2_oracles, ddof=1):.2f} pp | {t2:<8.2f} | {p2:<8.4f}")
+    print(f"{'d >= 3 (Distant)':<18} | {counts['d3_share_pct']:<10.1f} | {counts['d3_count_mean']:<16.1f} | {np.mean(d3_accs):.2f} +/- {np.std(d3_accs, ddof=1):.2f}%    | {np.mean(d3_oracles):.2f} +/- {np.std(d3_oracles, ddof=1):.2f}%       | {np.mean(d3_accs - d3_oracles):+.2f} +/- {np.std(d3_accs - d3_oracles, ddof=1):.2f} pp | {t3:<8.2f} | {p3:<8.4f}")
     print("-" * 128)
     
     # Check identity
