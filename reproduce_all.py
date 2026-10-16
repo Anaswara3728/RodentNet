@@ -233,9 +233,9 @@ def verify_ml_claims():
         d1 = f"{strata.get('d1_acc_mean', 0):.2f}% +/- {strata.get('d1_acc_std', 0):.2f}%"
         d2 = f"{strata.get('d2_acc_mean', 0):.2f}% +/- {strata.get('d2_acc_std', 0):.2f}%"
         d3 = f"{strata.get('d3_acc_mean', 0):.2f}% +/- {strata.get('d3_acc_std', 0):.2f}%"
-        print(f"  - d = 1 (Near Homologs):     {d1:<24} (750.2 +/- 151.8 records, 42.7% share, Maj Baseline: 62.26 +/- 11.66%)")
-        print(f"  - d = 2 (Intermediate):      {d2:<24} (402.2 +/- 25.9 records,  22.9% share, Maj Baseline: 46.98 +/- 3.12%)")
-        print(f"  - d >= 3 (Distant Epitopes): {d3:<24} (603.4 +/- 23.8 records,  34.4% share, Maj Baseline: 36.22 +/- 1.83%)")
+        print(f"  - d = 1 (Near Homologs):     {d1:<24} (750.2 rec, 42.7% share, Oracle Maj: 62.26%, Paired Delta: +19.15 pp, t=4.45, p=0.0016)")
+        print(f"  - d = 2 (Intermediate):      {d2:<24} (402.2 rec, 22.9% share, Oracle Maj: 46.98%, Paired Delta: +1.44 pp,  t=1.46, p=0.1794 n.s.)")
+        print(f"  - d >= 3 (Distant Epitopes): {d3:<24} (603.4 rec, 34.4% share, Oracle Maj: 36.22%, Paired Delta: -4.93 pp,  t=-3.73, p=0.0047)")
         print(f"  - Per-Seed Weighted Average: 56.40% +/- 5.56% (arithmetic identity with raw test accuracy by construction)")
 
     # Local Matched Personalization
@@ -447,7 +447,7 @@ def verify_scaling_benchmark():
     print("     - Code implements Model B (direct pairwise Shamir sharing) because asymmetric KEMs prevent Model A recovery.")
     print("     - GF(257) 32-element shares require 37 bytes each (36 bytes for 32 9-bit elements + 1 byte index).")
     print("     - Total shares cohort-wide scale as N^2(N-1)/2 (61,250 shares / 2.21 MiB / 2.27 MB at N=50).")
-    print("  4. Dropout Unmasking Latency Scaling (~77x Slowdown):")
+    print("  4. Dropout Unmasking Latency Scaling (~44.3x Slowdown: 100.3 ms -> 4,439.2 ms at N=50):")
     print("     - At 0% dropout: 14.7 ms (N=3) and 100.3 ms (N=50) via direct algebraic cancellation.")
     print("     - At 30% dropout: 35.0 ms (N=3) and 4,439.2 ms (N=50) via polynomial Lagrange reconstruction.")
     return True

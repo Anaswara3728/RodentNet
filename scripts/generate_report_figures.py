@@ -134,18 +134,18 @@ print("[OK] crypto_overhead_comparison.png created")
 # ==============================================================================
 fig, ax = plt.subplots(figsize=(8, 4.5))
 
-strata = [r"$d = 1$" + "\n(Near Homologs\n603 test TCRs)", 
-          r"$d = 2$" + "\n(Intermediate\n407 test TCRs)", 
-          r"$d \geq 3$" + "\n(Distant Sequences\n581 test TCRs)"]
-model_acc = [77.43, 49.75, 29.79]
-majority_base = [58.37, 51.35, 34.25]
-yerr = [12.28, 4.88, 2.43]
+strata = [r"$d = 1$" + "\n(Near Homologs\n750 test TCRs)", 
+          r"$d = 2$" + "\n(Intermediate\n402 test TCRs)", 
+          r"$d \geq 3$" + "\n(Distant Sequences\n603 test TCRs)"]
+model_acc = [81.42, 48.41, 31.28]
+majority_base = [62.26, 46.98, 36.22]
+yerr = [10.00, 5.26, 4.78]
 
 x = np.arange(len(strata))
 width = 0.35
 
-rects1 = ax.bar(x - width/2, model_acc, width, yerr=yerr, capsize=5, label='Secured FastKAN Model (5-Seed Mean)', color='#2563eb', edgecolor='#1d4ed8')
-rects2 = ax.bar(x + width/2, majority_base, width, label='Stratum Majority Antigen Baseline', color='#f97316', edgecolor='#ea580c')
+rects1 = ax.bar(x - width/2, model_acc, width, yerr=yerr, capsize=5, label='Secured FastKAN Model (10-Seed Mean)', color='#2563eb', edgecolor='#1d4ed8')
+rects2 = ax.bar(x + width/2, majority_base, width, label='Oracle Stratum-Majority Baseline', color='#f97316', edgecolor='#ea580c')
 
 ax.set_ylabel('Test Accuracy (%)', weight='bold', fontsize=11)
 ax.set_title('Generalization Decays Monotonically Across Sequence Distance', weight='bold', fontsize=12)
@@ -171,12 +171,12 @@ for r in rects2:
                 ha='center', va='bottom', weight='bold', color='#9a3412', fontsize=9.5)
 
 # Annotation callout
-ax.annotate("+19.06 pp Gain\n(Captures Shared Motifs)", xy=(0 - width/2, 77.43), xytext=(0.4, 85),
+ax.annotate("+19.16 pp Gain\n(p = 0.0016, Paired t-test)", xy=(0 - width/2, 81.42), xytext=(0.35, 87),
             arrowprops=dict(facecolor='#1e3a8a', arrowstyle="->", lw=1.5),
             fontsize=8.5, weight='bold', color='#1e3a8a',
             bbox=dict(boxstyle="round,pad=0.3", fc="#dbeafe", ec="#93c5fd"))
 
-ax.annotate("Drops Below Dominant Class\n(Cannot Extrapolate Without PLMs)", xy=(2 - width/2, 29.79), xytext=(1.4, 45),
+ax.annotate("Below Oracle Baseline\n(-4.94 pp, p = 0.0047)", xy=(2 - width/2, 31.28), xytext=(1.35, 45),
             arrowprops=dict(facecolor='#991b1b', arrowstyle="->", lw=1.5),
             fontsize=8.5, weight='bold', color='#991b1b',
             bbox=dict(boxstyle="round,pad=0.3", fc="#fee2e2", ec="#fca5a5"))
@@ -229,7 +229,7 @@ for n, desc, status_c in nodes_info:
 crypto_box = FancyBboxPatch((0.7, 0.7), 3.9, 1.0, facecolor='#0f172a', edgecolor='#38bdf8', linewidth=1, boxstyle="round,pad=0.05")
 ax.add_patch(crypto_box)
 ax.text(0.9, 1.45, "Session Mask Cancellation Floor:", color='#94a3b8', fontsize=8)
-ax.text(0.9, 1.15, "max abs diff (Δθ) = (2.37 ± 0.35) × 10⁻⁷  (Exact Cancellation)", color='#38bdf8', weight='bold', fontsize=8.5)
+ax.text(0.9, 1.15, "max abs diff (Δθ) = (2.42 ± 0.30) × 10⁻⁷  (Exact Cancellation)", color='#38bdf8', weight='bold', fontsize=8.5)
 ax.text(0.9, 0.88, "Galois Field: p = 1,099,511,627,689 (40-bit Prime)", color='#a5f3fc', fontsize=7.5)
 
 # Right Panel: Real-Time Simulation Status & Telemetry
@@ -240,8 +240,8 @@ ax.text(5.3, 4.6, "FEDERATED TRAINING TELEMETRY", color='#f8fafc', weight='bold'
 telemetry = [
     ("Federated Protocol", "Secured FedAvg + FastKAN Spline Layers"),
     ("Communication Round", "Round 10 of 10 Completed (Converged)"),
-    ("Secured Balanced Accuracy", "38.70% (±4.49%)  [+4.84 pp Over Local-Only]"),
-    ("Macro AUROC", "0.8162 (±0.0315)  [Zero Target Leakage]"),
+    ("Secured Balanced Accuracy", "39.32% (±5.75%)  [+6.21 pp Over Local-Only]"),
+    ("Macro AUROC", "0.8191 (±0.0330)  [Zero Target Leakage]"),
     ("Cryptographic Uplink Cost", "3,325 Bytes / Round (<0.35% Network Cost)"),
     ("Dropout Resilience", "2-of-3 Shamir Ephemeral Seeds Verified"),
 ]

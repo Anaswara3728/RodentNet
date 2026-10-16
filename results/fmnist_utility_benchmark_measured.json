@@ -65,6 +65,6 @@
     "paired_95_ci_upper_pp": 0.18,
     "max_round_delta_percent": 0.1707,
     "hypothesis_test": "Null hypothesis that secured MPC aggregation introduces utility loss is rejected (p > 0.05 on paired difference).",
-    "conclusion": "Post-quantum secure aggregation over Z_p achieves exact convergence parity with unencrypted FL across 5 independent random seeds."
+    "conclusion": "Post-quantum secure aggregation over Z_p introduces no detectable utility loss, tracking unencrypted FL within 0.0953 +/- 0.0634% across 5 independent random seeds."
   }
 }
