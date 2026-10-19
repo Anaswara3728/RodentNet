@@ -2,21 +2,21 @@
   "classical": {
     "x25519_pk_bytes": 32,
     "x25519_secret_bytes": 32,
-    "x25519_exchange_ms": 0.03294000402092934,
+    "x25519_exchange_ms": 0.0348159993882291,
     "ed25519_pk_bytes": 32,
     "ed25519_sig_bytes": 64,
-    "ed25519_sign_ms": 0.03113602753728628,
-    "ed25519_verify_ms": 0.08961602114140987
+    "ed25519_sign_ms": 0.035349001409485936,
+    "ed25519_verify_ms": 0.09948699793312699
   },
   "post_quantum": {
     "ml_kem_768_pk_bytes": 1184,
     "ml_kem_768_ct_bytes": 1088,
     "ml_kem_768_secret_bytes": 32,
-    "ml_kem_768_encaps_ms": 3.92692597117275,
-    "ml_kem_768_decaps_ms": 5.432291007600725,
+    "ml_kem_768_encaps_ms": 4.357304999430198,
+    "ml_kem_768_decaps_ms": 5.969596000213642,
     "ml_dsa_65_pk_bytes": 1952,
     "ml_dsa_65_sig_bytes": 3293,
-    "ml_dsa_65_sign_ms": 51.8279750039801,
-    "ml_dsa_65_verify_ms": 11.224082983098924
+    "ml_dsa_65_sign_ms": 32.662295998306945,
+    "ml_dsa_65_verify_ms": 12.247193999937735
   }
 }

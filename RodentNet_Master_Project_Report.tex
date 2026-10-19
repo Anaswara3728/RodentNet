@@ -373,7 +373,7 @@ To verify exact mask cancellation, an isolated test fed \textbf{identical client
 Because the fixed-point quantization scale is $S = 10^6$ (quantization floor $10^{-6}$), this confirms mathematical equivalence within the discrete quantization bound.
 
 \section{Experiment 3: Top-10 Epitope Classification Benchmark}
-We evaluated on the HomoSapiens TRB subset of VDJdb across 5 seeds under Dirichlet non-IID partitioning ($\alpha=0.5$) across 3 hospitals, with a fixed budget of 10 epochs/rounds across all models.
+We evaluated on the HomoSapiens TRB subset of VDJdb across 10 independent random seeds ($s \in \{42, \dots, 51\}$) under Dirichlet non-IID partitioning ($\alpha=0.5$) across 3 hospitals, with a fixed budget of 10 epochs/rounds across all models.
 
 \subsection{Dataset Filtering and Attrition Pipeline}
 The public VDJdb repository contains experimental noise and ambiguous records. We applied a systematic 6-stage filtering pipeline:
